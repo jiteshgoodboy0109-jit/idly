@@ -1,0 +1,89 @@
+/* Navbar Styles */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid #E5E7EB;
+    padding: 16px 0;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+    /* Solid Black as requested */
+    letter-spacing: -0.5px;
+}
+
+.navbar-logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+.navbar-logo-img {
+    height: 40px;
+    /* Adjust based on preference, standard navbar logo size */
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Bouncy premium feel */
+}
+
+.navbar-brand:hover .navbar-logo-img,
+.navbar-brand:active .navbar-logo-img {
+    transform: scale(1.15);
+}
+
+.navbar-cart-link {
+    position: relative;
+    background: #F3F4F6;
+    /* Old style grey background */
+    padding: 10px;
+    border-radius: 50%;
+    color: #4b5563;
+    /* Subtle dark grey icon */
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-cart-link:hover {
+    background: #E5E7EB;
+    transform: translateY(-2px);
+    color: #10B981;
+    /* Green on hover */
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--gradient-primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+    border: 2px solid white;
+}

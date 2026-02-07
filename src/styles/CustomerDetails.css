@@ -1,0 +1,64 @@
+/* Customer Details Page Styles */
+
+.details-container {
+    max-width: 600px;
+}
+
+.details-card {
+    padding: 40px;
+}
+
+.details-title {
+    margin-bottom: 32px;
+    color: var(--color-text);
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.details-form-group {
+    margin-bottom: 24px;
+}
+
+.details-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.details-textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid #E5E7EB;
+    font-family: var(--font-main);
+    min-height: 120px;
+    resize: vertical;
+    outline: none;
+    background-color: #F9FAFB;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.details-textarea:focus {
+    background-color: white;
+    border-color: #10B981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.details-textarea.error {
+    border-color: var(--color-error);
+}
+
+.details-error-text {
+    color: var(--color-error);
+    font-size: 0.85rem;
+    margin-top: 6px;
+    display: block;
+}
+
+.details-submit-btn {
+    width: 100%;
+    font-size: 1.1rem !important;
+    margin-top: 16px;
+}

@@ -1,0 +1,72 @@
+/* Payment Page Styles */
+
+.payment-container {
+    max-width: 500px;
+}
+
+.payment-title {
+    margin-bottom: 32px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2rem;
+}
+
+.payment-card {
+    padding: 40px;
+}
+
+.payment-total-label {
+    margin-bottom: 16px;
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+}
+
+.payment-total-wrapper {
+    margin-bottom: 32px;
+}
+
+.payment-total-amount {
+    font-size: 3rem;
+    color: var(--color-text);
+    letter-spacing: -1px;
+}
+
+.qr-code-wrapper {
+    padding: 24px;
+    display: inline-block;
+    margin-bottom: 24px;
+    background-color: white;
+    border-radius: var(--radius-md);
+    border: 1px solid #E5E7EB;
+    box-shadow: var(--shadow-sm);
+}
+
+.qr-code-img {
+    width: 200px;
+    height: 200px;
+    display: block;
+}
+
+.payment-instruction {
+    color: var(--color-text-light);
+    margin-bottom: 32px;
+    font-size: 0.9rem;
+}
+
+.payment-button {
+    width: 100%;
+    font-size: 1.1rem !important;
+}
+
+.payment-secure-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #10B981;
+    margin-top: 24px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}

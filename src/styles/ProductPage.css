@@ -1,0 +1,435 @@
+/* ============================================
+   PRODUCT PAGE STYLES - PREMIUM GREEN THEME
+   ============================================ */
+.product-page {
+    background-color: #FFFFFF;
+    /* Pure white background */
+    min-height: 100vh;
+    padding-bottom: 4rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ============================================
+   HERO VIDEO SECTION
+   ============================================ */
+.hero-video-container {
+    width: 100%;
+    /* Limit height on desktop so it doesn't take up too much space */
+    max-height: 500px;
+    overflow: hidden;
+    background: #000;
+    position: relative;
+    /* Ensure it sits below fixed navbar (navbar is 80px) */
+    margin-top: 80px;
+}
+
+.hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.95;
+    /* Slight tint if needed, or keeping it clean */
+}
+
+/* ============================================
+   BANNER SECTION
+   ============================================ */
+.header-banner {
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    max-height: 300px;
+    /* Desktop Constraint */
+    overflow: hidden;
+    margin-bottom: 2rem;
+    position: relative;
+    border-radius: 0;
+    box-shadow: var(--shadow-md);
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    object-position: center;
+}
+
+.banner-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 90%;
+    color: white;
+}
+
+.banner-overlay h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.banner-overlay p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .banner-overlay h2 {
+        font-size: 1.5rem;
+    }
+
+    .banner-overlay p {
+        font-size: 0.9rem;
+    }
+}
+
+/* ============================================
+   CONTAINER & SECTIONS
+   ============================================ */
+.product-page-container {
+    max-width: 1200px;
+    /* Content Alignment */
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.category-section {
+    margin-bottom: 3.5rem;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eef2f5;
+}
+
+.category-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+    position: relative;
+}
+
+.category-title::after {
+    content: '';
+    position: absolute;
+    bottom: -0.6rem;
+    /* Align with border-bottom of header */
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--color-primary-start);
+    /* Primary Green */
+    border-radius: 2px;
+}
+
+.view-all-link {
+    color: var(--color-primary-start);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.view-all-link:hover {
+    text-decoration: underline;
+    transform: translateX(3px);
+}
+
+/* ============================================
+   PRODUCTS GRID
+   ============================================ */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 columns on desktop */
+    gap: 1.5rem;
+}
+
+/* ============================================
+   PRODUCT CARD DESIGN
+   ============================================ */
+.product-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
+    transform: translateY(-4px);
+    border-color: #A7F3D0;
+    /* Emerald 200 */
+}
+
+/* Discount Badge */
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #d8f3dc;
+    /* Light Green */
+    color: #1b4332;
+    /* Dark Green */
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    z-index: 2;
+}
+
+/* Image */
+.product-image-container {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.product-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.08);
+}
+
+/* Details */
+.product-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 0 0.5rem;
+    line-height: 1.4;
+    height: 2.8em;
+    /* restrict to 2 lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Pricing */
+.product-pricing {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.current-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #059669;
+    /* Emerald 600 */
+}
+
+.original-price {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    text-decoration: line-through;
+    font-weight: 500;
+}
+
+/* Variant Selector */
+.variant-selector {
+    margin-bottom: 1rem;
+}
+
+.variant-selector select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    color: #555;
+    font-size: 0.85rem;
+    background: #f9f9f9;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Actions Section */
+.product-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    /* Push to bottom */
+    gap: 0.5rem;
+}
+
+/* Quantity Selector */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f1f3f5;
+    border-radius: 6px;
+    padding: 0.2rem;
+    flex: 1;
+}
+
+.quantity-selector button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: transparent;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 3px;
+    /* visual center fix */
+    font-weight: 600;
+}
+
+.quantity-selector button:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.quantity-selector span {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Add to Cart Button */
+.add-to-cart-btn {
+    background: var(--gradient-primary);
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(34, 197, 94, 0.2);
+}
+
+.add-to-cart-btn:hover {
+    background: var(--gradient-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(34, 197, 94, 0.3);
+}
+
+.cart-icon-btn {
+    width: 20px;
+    height: 20px;
+    color: white;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet View */
+@media (max-width: 1024px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+}
+
+/* Mobile View - CRITICAL FOR USER */
+@media (max-width: 768px) {
+    .header-banner {
+        margin-top: 20px;
+        /* Reduced gap for mobile */
+        height: 180px;
+        /* Specific height for mobile */
+        min-height: auto;
+        max-height: none;
+        border-radius: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .product-page-container {
+        padding: 1rem;
+        padding-top: 1rem;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 Products per row */
+        gap: 0.8rem;
+        /* Tighter gap */
+    }
+
+    .category-title {
+        font-size: 1.2rem;
+    }
+
+    /* Compact Card for Mobile */
+    .product-card {
+        padding: 0.8rem;
+    }
+
+    .discount-badge {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.4rem;
+    }
+
+    .product-image-container {
+        height: 120px;
+        /* Smaller image area */
+    }
+
+    .product-name {
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .current-price {
+        font-size: 1rem;
+    }
+
+    .original-price {
+        font-size: 0.8rem;
+    }
+
+    .variant-selector select {
+        font-size: 0.8rem;
+        padding: 0.3rem;
+    }
+
+    /* Optimize actions for touch */
+    .quantity-selector button {
+        width: 25px;
+        height: 25px;
+        font-size: 1rem;
+    }
+
+    .add-to-cart-btn {
+        width: 32px;
+        height: 32px;
+    }
+}

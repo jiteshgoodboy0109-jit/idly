@@ -1,0 +1,60 @@
+/* Button Styles */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: var(--radius-pill);
+    /* Modern Pill Shape */
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Primary Variant */
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 4px 14px rgba(67, 160, 71, 0.4);
+}
+
+.btn-primary:hover {
+    background: var(--gradient-hover);
+    box-shadow: 0 6px 20px rgba(67, 160, 71, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Secondary Variant */
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--color-primary-start);
+    color: var(--color-primary-start);
+}
+
+.btn-secondary:hover {
+    background: rgba(67, 160, 71, 0.1);
+}
+
+/* Success Variant */
+.btn-success {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+}
+
+.btn-success:hover {
+    transform: translateY(-1px);
+}
