@@ -1,27 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;700&display=swap');
 
 :root {
-    /* Clean Professional Palette */
-    --color-primary-start: #FF6B6B;
-    --color-primary-end: #FFA502;
+    /* Clean Professional Palette - Leaf Green Theme */
+    --color-primary-start: #43a047;
+    /* Vibrant Leaf Green */
+    --color-primary-end: #1b5e20;
+    /* Deep Forest Green */
 
     /* Bright White Theme */
     --color-bg: #FFFFFF;
-    --color-text: #000000;
-    --color-text-light: #333333;
+    --color-text: #1a1a1a;
+    --color-text-light: #4b5563;
     /* Darker gray for better readability against white */
-    --color-border: #E0E0E0;
+    --color-border: #e5e7eb;
 
     /* Accents */
-    --gradient-primary: linear-gradient(135deg, var(--color-primary-start), var(--color-primary-end));
-    --gradient-hover: linear-gradient(135deg, #FF8787, #FFC107);
+    --gradient-primary: linear-gradient(135deg, #22c55e, #15803d);
+    /* Vibrant Emerald */
+    --gradient-hover: linear-gradient(135deg, #4ade80, #16a34a);
+    /* Brighter Lime-Green Hover */
 
     /* Modern Shadows (Crisper) */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
-    --shadow-glow: 0 0 0 0 transparent;
-    /* Removed excessive glow for "real" feel */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 15px rgba(67, 160, 71, 0.3);
+    /* Green Glow */
 
     --radius-sm: 6px;
     --radius-md: 12px;
@@ -30,6 +34,19 @@
 
     --font-main: 'Poppins', sans-serif;
     --font-tamil: 'Noto Sans Tamil', sans-serif;
+
+    /* Additional UI Colors */
+    --color-white: #FFFFFF;
+    --color-gray-50: #F9FAFB;
+    --color-gray-100: #F3F4F6;
+    --color-gray-200: #E5E7EB;
+    --color-gray-300: #D1D5DB;
+    --color-gray-400: #9CA3AF;
+    --color-gray-600: #4b5563;
+    --color-gray-900: #1a1a1a;
+
+    --color-success: #10B981;
+    --color-success-dark: #059669;
 }
 
 * {
@@ -74,8 +91,8 @@ h6 {
 .glass-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-md);
-    border-color: #FF9933;
-    /* Subtle interactive border */
+    border-color: var(--color-primary-start);
+    /* Subtle interactive green border */
 }
 
 /* Base Elements */
@@ -141,4 +158,16 @@ button {
 
 .animate-fade-in {
     animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* App Layout */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+}
+
+.main-content {
+    flex: 1;
 }

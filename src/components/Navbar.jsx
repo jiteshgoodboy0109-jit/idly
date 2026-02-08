@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingBasket } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
-import logo from '../assets/logo1.png';
+import { SHOP_CONFIG } from '../config';
 import '../styles/Navbar.css';
 
 const Navbar = () => {
@@ -13,9 +13,9 @@ const Navbar = () => {
             <div className="container navbar-container">
                 <Link to="/" className="navbar-brand">
                     <div className="navbar-logo-icon">
-                        <img src={logo} alt="Gliffy Foods Logo" className="navbar-logo-img" />
+                        <img src={SHOP_CONFIG.logo} alt={`${SHOP_CONFIG.name} Logo`} className="navbar-logo-img" />
                     </div>
-                    <span>Gliffy Foods</span>
+                    <span>{SHOP_CONFIG.name}</span>
                 </Link>
 
                 <Link to="/cart" className="navbar-cart-link">

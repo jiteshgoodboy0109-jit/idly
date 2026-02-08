@@ -27,7 +27,7 @@
 /* Primary Variant */
 .btn-primary {
     background: var(--gradient-primary);
-    color: white;
+    color: var(--color-white);
     box-shadow: 0 4px 14px rgba(67, 160, 71, 0.4);
 }
 
@@ -50,8 +50,8 @@
 
 /* Success Variant */
 .btn-success {
-    background: linear-gradient(135deg, #10B981, #059669);
-    color: white;
+    background: linear-gradient(135deg, var(--color-success), var(--color-success-dark));
+    color: var(--color-white);
     box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
 }
 

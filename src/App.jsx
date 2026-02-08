@@ -9,19 +9,15 @@ import CustomerDetails from './pages/CustomerDetails';
 import Payment from './pages/Payment';
 import OrderSuccess from './pages/OrderSuccess';
 
+
 function App() {
     return (
         <ShopProvider>
             <Router>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    minHeight: '100vh',
-                    backgroundColor: 'var(--color-bg)'
-                }}>
+                <div className="app-container">
                     <Navbar />
 
-                    <main style={{ flex: 1 }}>
+                    <main className="main-content">
                         <Routes>
                             <Route path="/" element={<Products />} />
                             <Route path="/cart" element={<Cart />} />

@@ -2,9 +2,8 @@ import React from 'react';
 import ProductCard from '../components/ProductCard';
 import { PRODUCTS_DATA } from '../data/products';
 import { useShop } from '../context/ShopContext';
+import { SHOP_CONFIG } from '../config';
 import '../styles/ProductPage.css';
-
-import banner1 from '../assets/banner1.png';
 
 const Products = () => {
     const { addToCart } = useShop();
@@ -14,7 +13,7 @@ const Products = () => {
             <div className="product-page-container">
                 {/* Single Top Banner */}
                 <div className="header-banner">
-                    <img src={banner1} alt="Store Banner" className="banner-image" />
+                    <img src={SHOP_CONFIG.banner} alt="Store Banner" className="banner-image" />
                 </div>
 
                 <div className="products-grid">
