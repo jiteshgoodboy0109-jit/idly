@@ -2,10 +2,10 @@
 
 :root {
     /* Clean Professional Palette - Leaf Green Theme */
-    --color-primary-start: #43a047;
-    /* Vibrant Leaf Green */
-    --color-primary-end: #1b5e20;
-    /* Deep Forest Green */
+    --color-primary-start: #15803d;
+    /* Rich Forest Green */
+    --color-primary-end: #14532d;
+    /* Deep Dark Green */
 
     /* Bright White Theme */
     --color-bg: #FFFFFF;
@@ -15,17 +15,17 @@
     --color-border: #e5e7eb;
 
     /* Accents */
-    --gradient-primary: linear-gradient(135deg, #22c55e, #15803d);
-    /* Vibrant Emerald */
-    --gradient-hover: linear-gradient(135deg, #4ade80, #16a34a);
-    /* Brighter Lime-Green Hover */
+    --gradient-primary: linear-gradient(135deg, #16a34a, #15803d);
+    /* Deep Green Gradient */
+    --gradient-hover: linear-gradient(135deg, #22c55e, #16a34a);
+    /* Vibrant Green Hover */
 
     /* Modern Shadows (Crisper) */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-glow: 0 0 15px rgba(67, 160, 71, 0.3);
-    /* Green Glow */
+    --shadow-glow: 0 0 15px rgba(21, 128, 61, 0.4);
+    /* Deep Green Glow */
 
     --radius-sm: 6px;
     --radius-md: 12px;
@@ -92,7 +92,7 @@ h6 {
     transform: translateY(-4px);
     box-shadow: var(--shadow-md);
     border-color: var(--color-primary-start);
-    /* Subtle interactive green border */
+    /* Subtle interactive emerald border */
 }
 
 /* Base Elements */
