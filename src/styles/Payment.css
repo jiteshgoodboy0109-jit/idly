@@ -1,72 +1,246 @@
-/* Payment Page Styles */
+/* 
+ * PAYMENT PAGE - CLEAN MANUAL STYLE
+ * Centered and Perfectly Responsive
+ */
 
-.payment-container {
-    max-width: 500px;
-}
-
-.payment-title {
-    margin-bottom: 32px;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 2rem;
-}
-
-.payment-card {
-    padding: 40px;
-}
-
-.payment-total-label {
-    margin-bottom: 16px;
-    font-size: 1.1rem;
-    color: var(--color-text-light);
-}
-
-.payment-total-wrapper {
-    margin-bottom: 32px;
-}
-
-.payment-total-amount {
-    font-size: 3rem;
-    color: var(--color-text);
-    letter-spacing: -1px;
-}
-
-.qr-code-wrapper {
-    padding: 24px;
-    display: inline-block;
-    margin-bottom: 24px;
-    background-color: white;
-    border-radius: var(--radius-md);
-    border: 1px solid #E5E7EB;
-    box-shadow: var(--shadow-sm);
-}
-
-.qr-code-img {
-    width: 200px;
-    height: 200px;
-    display: block;
-}
-
-.payment-instruction {
-    color: var(--color-text-light);
-    margin-bottom: 32px;
-    font-size: 0.9rem;
-}
-
-.payment-button {
+.payment-page-manual {
     width: 100%;
-    font-size: 1.1rem !important;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-.payment-secure-badge {
+.payment-grid-manual {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 2rem;
+    align-items: start;
+    width: 100%;
+}
+
+/* Bill Container */
+.manual-bill-container {
+    padding: 2rem;
+    background: white !important;
+    border-top: 6px solid var(--color-primary-start);
+}
+
+.bill-manual-header {
+    text-align: center;
+    border-bottom: 2px dashed #eee;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.bill-manual-header h3 {
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    margin: 0.4rem 0;
+}
+
+.bill-manual-items {
+    margin-bottom: 1.5rem;
+}
+
+.bill-manual-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+}
+
+.item-qty-manual {
+    color: #888;
+    width: 30px;
+}
+
+.item-name-manual {
+    flex: 1;
+    font-weight: 500;
+}
+
+.item-price-manual {
+    font-weight: 700;
+}
+
+.bill-manual-divider {
+    border-top: 1px dashed #eee;
+    margin: 1.2rem 0;
+}
+
+.bill-manual-total .summary-line {
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    margin-bottom: 0.4rem;
+}
+
+.free-manual {
+    color: var(--color-success);
+    font-weight: 700;
+}
+
+.grand-total-manual {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid #f0f0f0;
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.manual-customer-card {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Pay Hub */
+.hub-title-manual {
+    font-size: 2.22rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+}
+
+.hub-card-manual {
+    padding: 2.5rem;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+}
+
+.manual-loader-overlay {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    color: #10B981;
-    margin-top: 24px;
-    font-size: 0.9rem;
-    font-weight: 500;
+    text-align: center;
+}
+
+.manual-spin {
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.manual-qr-box {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.manual-qr-box img {
+    width: 220px;
+    border: 1px solid #f0f0f0;
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.manual-qr-box p {
+    font-weight: 700;
+    color: #444;
+}
+
+.mobile-only-manual {
+    display: none;
+}
+
+.intent-btn-manual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    background: #000;
+    color: white;
+    padding: 1.1rem;
+    border-radius: 14px;
+    font-weight: 800;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+}
+
+.manual-utr-form {
+    margin-top: auto;
+    margin-bottom: 1.5rem;
+}
+
+.manual-utr-form label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+}
+
+.manual-utr-form input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    font-size: 1.3rem;
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.help-text {
+    font-size: 0.8rem;
+    color: #888;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.manual-verify-btn {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--color-primary-start);
+    color: white;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.manual-trust-tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    color: #666;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .payment-grid-manual {
+        grid-template-columns: 1fr;
+    }
+
+    .mobile-only-manual {
+        display: block;
+    }
+
+    .manual-pay-hub {
+        order: 1;
+        text-align: center;
+    }
+
+    .manual-bill-container {
+        order: 2;
+    }
+
+    .hub-title-manual {
+        font-size: 1.8rem;
+    }
 }

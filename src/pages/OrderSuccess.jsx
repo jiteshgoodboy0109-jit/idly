@@ -1,61 +1,59 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useShop } from '../context/ShopContext';
-import Button from '../components/Button';
 import { CheckCircle } from 'lucide-react';
 import '../styles/OrderSuccess.css';
 
+/**
+ * OrderSuccess Page
+ * Displays a confirmation message after a successful order.
+ * Centered vertically and horizontally for a premium mobile experience.
+ */
 const OrderSuccess = () => {
     const { order } = useShop();
     const navigate = useNavigate();
 
+    // Safety check: if no order data, go back to shop
     if (!order) {
         return (
-            <div className="container section-padding text-center">
-                <Button onClick={() => navigate('/')}>Return Home</Button>
+            <div className="checkout-page-container">
+                <button onClick={() => navigate('/')} className="manual-home-btn" style={{ maxWidth: 300 }}>
+                    Return to Shop
+                </button>
             </div>
         );
     }
 
     return (
-        <div className="container section-padding animate-fade-in text-center success-container">
-            <div className="glass-panel success-panel">
-                <div className="success-glow"></div>
+        <div className="checkout-page-container success-page-manual">
+            <div className="glass-panel success-panel-manual animate-fade-in">
 
-                <div className="success-icon-wrapper">
-                    <CheckCircle size={80} strokeWidth={1.5} />
+                <div className="manual-check-icon">
+                    <CheckCircle size={70} strokeWidth={1.5} />
                 </div>
 
-                <h1 className="success-title">
-                    Order Confirmed!
-                </h1>
+                <h1 className="manual-success-title">Order Placed!</h1>
+                <p className="manual-success-msg">Your order has been recorded. Abundance awaits.</p>
 
-                <p className="success-message">
-                    We have received your offering.
-                </p>
-
-                <p className="success-blessing">
-                    "May abundance be with you."
-                </p>
-
-                <div className="order-details-card">
-                    <div className="order-row">
-                        <span className="order-label">Order ID</span>
-                        <span className="order-value">{order.id}</span>
+                {/* Order Summary Card */}
+                <div className="manual-order-card">
+                    <div className="manual-order-row">
+                        <span>Order ID</span>
+                        <span>{order.id}</span>
                     </div>
-                    <div className="order-row">
-                        <span className="order-label">Amount</span>
-                        <span className="order-value">₹{order.total}</span>
+                    <div className="manual-order-row">
+                        <span>Total Paid</span>
+                        <span>₹{order.total}</span>
                     </div>
-                    <div className="order-row">
-                        <span className="order-label">Status</span>
-                        <span className="order-status">{order.status}</span>
+                    <div className="manual-order-row">
+                        <span>Order Status</span>
+                        <span className="status-label-manual">{order.status}</span>
                     </div>
                 </div>
 
-                <Button onClick={() => navigate('/')} variant="primary">
-                    Continue Shopping
-                </Button>
+                <button onClick={() => navigate('/')} className="manual-home-btn">
+                    Back to Shop
+                </button>
             </div>
         </div>
     );

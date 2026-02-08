@@ -2,30 +2,24 @@
 
 :root {
     /* Clean Professional Palette - Leaf Green Theme */
-    --color-primary-start: #15803d;
-    /* Rich Forest Green */
-    --color-primary-end: #14532d;
-    /* Deep Dark Green */
+    --color-primary-start: #008000;
+    --color-primary-end: #004d00;
 
     /* Bright White Theme */
     --color-bg: #FFFFFF;
     --color-text: #1a1a1a;
     --color-text-light: #4b5563;
-    /* Darker gray for better readability against white */
     --color-border: #e5e7eb;
 
     /* Accents */
-    --gradient-primary: linear-gradient(135deg, #16a34a, #15803d);
-    /* Deep Green Gradient */
-    --gradient-hover: linear-gradient(135deg, #22c55e, #16a34a);
-    /* Vibrant Green Hover */
+    --gradient-primary: linear-gradient(135deg, #008000, #008000);
+    --gradient-hover: linear-gradient(135deg, #008000, #008000);
 
-    /* Modern Shadows (Crisper) */
+    /* Modern Shadows */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-glow: 0 0 15px rgba(21, 128, 61, 0.4);
-    /* Deep Green Glow */
+    --shadow-glow: 0 0 15px rgba(0, 128, 0, 0.4);
 
     --radius-sm: 6px;
     --radius-md: 12px;
@@ -35,18 +29,15 @@
     --font-main: 'Poppins', sans-serif;
     --font-tamil: 'Noto Sans Tamil', sans-serif;
 
-    /* Additional UI Colors */
     --color-white: #FFFFFF;
     --color-gray-50: #F9FAFB;
     --color-gray-100: #F3F4F6;
     --color-gray-200: #E5E7EB;
-    --color-gray-300: #D1D5DB;
     --color-gray-400: #9CA3AF;
     --color-gray-600: #4b5563;
     --color-gray-900: #1a1a1a;
 
-    --color-success: #10B981;
-    --color-success-dark: #059669;
+    --color-success: #008000;
 }
 
 * {
@@ -62,7 +53,6 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
-    /* "Real coding" crisp text */
     -moz-osx-font-smoothing: grayscale;
 }
 
@@ -74,28 +64,28 @@ h5,
 h6 {
     color: var(--color-text);
     font-weight: 700;
-    letter-spacing: -0.01em;
 }
 
-/* Card Styling - Clean & Professional */
+/* Card Styling */
 .glass-card,
 .glass-panel {
-    background: #FFFFFF;
-    border: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.3s ease;
     overflow: hidden;
 }
 
 .glass-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
     border-color: var(--color-primary-start);
-    /* Subtle interactive emerald border */
 }
 
-/* Base Elements */
+/* Base Elements & Utilities */
 a {
     text-decoration: none;
     color: inherit;
@@ -108,7 +98,6 @@ button {
     outline: none;
 }
 
-/* Layout Utilities */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -123,27 +112,14 @@ button {
     padding: 60px 0;
 }
 
-.flex {
-    display: flex;
-}
-
-.items-center {
-    align-items: center;
-}
-
-.justify-between {
-    justify-content: space-between;
-}
-
-/* Responsive Grid - "Real Coding" Skills (Robust) */
+/* Grid */
 .grid-responsive {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    /* Slightly wider cards */
     gap: 32px;
 }
 
-/* Animations - Subtle & Professional */
+/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -160,14 +136,25 @@ button {
     animation: fadeIn 0.4s ease-out forwards;
 }
 
-/* App Layout */
+/* Layout */
 .app-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: var(--color-bg);
 }
 
 .main-content {
     flex: 1;
+}
+
+/* Global Checkout Container - Perfect Centering on ALL Devices */
+.checkout-page-container {
+    width: 100%;
+    min-height: calc(100vh - 180px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    margin: 0 auto;
 }

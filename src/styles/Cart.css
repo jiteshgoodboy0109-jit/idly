@@ -1,278 +1,206 @@
-/* Cart Page Styles - Clean & Modern */
-.cart-page {
-    position: relative;
-    min-height: 100vh;
-    background-color: #fcfcfc;
-    padding-bottom: 140px;
-    /* Space for fixed footer */
-    font-family: 'Poppins', sans-serif;
+/* 
+ * CART PAGE - CLEAN MANUAL STYLE
+ * Centered and Perfectly Responsive
+ */
+
+.cart-page-manual {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-/* Header */
-.cart-header {
+/* Header Section */
+.cart-header-manual {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 24px;
-    background: white;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    /* No border to keep it ultra clean, maybe subtle shadow on scroll if needed */
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
 }
 
-.cart-header h1 {
-    font-size: 1.8rem;
+.cart-header-manual h1 {
+    font-size: 1.5rem;
     font-weight: 800;
-    color: #0f172a;
     margin: 0;
-    letter-spacing: -0.5px;
 }
 
-.close-btn {
-    background: transparent;
+.back-btn-manual {
+    background: var(--color-gray-100);
     border: none;
-    color: #1e293b;
-    cursor: pointer;
-    padding: 4px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.back-btn-manual:active {
+    transform: scale(0.9);
 }
 
 /* Empty State */
-.cart-empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 60vh;
-    text-align: center;
-    padding: 20px;
+.cart-empty-panel {
+    padding: 3rem 2rem;
+    width: 100%;
+    max-width: 400px;
 }
 
-.cart-empty p {
-    font-size: 1.2rem;
-    color: #64748b;
-    margin-bottom: 20px;
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
 }
 
-.browse-btn {
-    padding: 12px 24px;
-    background: var(--gradient-primary);
+.browse-btn-manual {
+    margin-top: 1.5rem;
+    padding: 0.8rem 2rem;
+    background: var(--color-primary-start);
     color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
+    border-radius: 12px;
+    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
 }
 
-/* Cart Items List */
-.cart-items-container {
-    padding: 16px;
+/* Items List */
+.cart-items-list-manual {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
-.cart-card {
-    background: white;
-    border-radius: 16px;
-    padding: 12px;
+.cart-item-card-manual {
     display: flex;
-    gap: 16px;
+    padding: 1rem;
+    gap: 1rem;
     align-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-    border: 1px solid #f1f5f9;
 }
 
-.cart-image-wrapper {
-    width: 80px;
-    height: 80px;
+.item-thumb {
+    width: 70px;
+    height: 70px;
     border-radius: 12px;
     overflow: hidden;
-    background: #f8fafc;
+    background: #f5f5f5;
     flex-shrink: 0;
 }
 
-.cart-item-image {
+.item-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.cart-item-details {
+.item-info {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
 }
 
-.cart-item-title {
+.item-info h3 {
     font-size: 1rem;
-    font-weight: 700;
-    color: #0f172a;
-    margin: 0;
-    line-height: 1.3;
+    margin-bottom: 0.2rem;
 }
 
-.cart-item-unit-price {
+.item-price-tag {
+    color: var(--color-gray-400);
     font-size: 0.9rem;
-    color: #64748b;
-    margin: 0;
-    margin-bottom: 8px;
-    font-weight: 500;
+    margin-bottom: 0.8rem;
 }
 
-.cart-item-controls {
+.item-actions {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
 }
 
-.qty-selector {
+.qty-picker {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 1rem;
+    background: var(--color-gray-50);
+    padding: 4px 8px;
+    border-radius: 8px;
 }
 
-.qty-btn {
-    width: 32px;
-    height: 32px;
+.qty-picker button {
+    background: white;
+    border: 1px solid var(--color-gray-200);
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    color: #334155;
-    cursor: pointer;
-    transition: all 0.2s;
+    color: var(--color-text);
 }
 
-.qty-btn:active {
-    background: #f1f5f9;
-    transform: scale(0.95);
-}
-
-.qty-count {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #0f172a;
-    width: 20px;
+.qty-picker span {
+    font-weight: 700;
+    min-width: 15px;
     text-align: center;
 }
 
-.delete-btn {
+.remove-item-btn {
     background: transparent;
-    border: none;
-    color: #10b981;
-    /* Emerald Green instead of Red */
+    color: var(--color-success);
     cursor: pointer;
     padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.8;
 }
 
-.delete-btn:hover {
-    opacity: 1;
-    background: #ecfdf5;
-    border-radius: 8px;
+.item-subtotal-desktop {
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-left: 0.5rem;
 }
 
-/* Total Price on Card - Hidden on mobile if too cramped, or shown */
-.cart-item-total {
-    display: none;
-    /* Keep cleaner for mobile focus */
+/* Summary Box */
+.cart-summary-panel-manual {
+    width: 100%;
+    padding: 1.5rem;
+    margin-top: auto;
 }
 
-@media (min-width: 640px) {
-    .cart-item-total {
-        display: block;
-        font-weight: 700;
-        font-size: 1.1rem;
-        color: #0f172a;
-        margin-left: auto;
-        padding-right: 12px;
-    }
-
-    .cart-container {
-        max-width: 600px;
-        margin: 0 auto;
-        box-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
-        /* Modal look on desktop */
-        background: white;
-        min-height: 100vh;
-    }
-}
-
-/* Sticky Footer */
-.cart-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    padding: 24px;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
-    z-index: 100;
-
-    /* Center on desktop */
-    max-width: 600px;
-    margin: 0 auto;
-    /* We need to ensure it stays fixed relative to viewport but centered */
-}
-
-/* Fix for footer centering on desktop -> needs a wrapper or media query adjustment 
-   Since page max-width is handled, let's just make sure footer matches page width logic
-*/
-@media (min-width: 640px) {
-    .cart-footer {
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100%;
-        border-top: 1px solid #f1f5f9;
-    }
-}
-
-.cart-total {
+.summary-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: #0f172a;
-}
-
-.checkout-btn {
-    width: 100%;
-    padding: 16px;
-    background: var(--gradient-primary);
-    color: white;
-    border: none;
-    border-radius: 12px;
+    margin-bottom: 1.2rem;
     font-size: 1.1rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    font-weight: 800;
+}
+
+.summary-total-price {
+    color: var(--color-primary-start);
+    font-size: 1.4rem;
+}
+
+.checkout-btn-manual {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--color-primary-start);
+    color: white;
+    font-weight: 800;
+    font-size: 1.1rem;
+    border-radius: 14px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(21, 128, 61, 0.2);
-    transition: all 0.2s;
+    transition: all 0.3s;
 }
 
-.checkout-btn:hover {
-    background: var(--gradient-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(21, 128, 61, 0.3);
+.checkout-btn-manual:active {
+    transform: scale(0.97);
 }
 
-.checkout-btn:active {
-    transform: scale(0.98);
+/* Mobile Responsive Adjustments */
+@media (max-width: 480px) {
+    .item-subtotal-desktop {
+        display: none;
+        /* Hide on small screens to save space */
+    }
+
+    .cart-header-manual h1 {
+        font-size: 1.3rem;
+    }
 }

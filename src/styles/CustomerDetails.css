@@ -1,22 +1,35 @@
-/* Customer Details Page Styles */
+/* 
+ * CUSTOMER DETAILS - RESTORED OLD VIEW
+ * Fixed alignment and consistent manual styling
+ */
 
 .details-container {
-    max-width: 600px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .details-card {
-    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    margin: 0 auto;
 }
 
 .details-title {
-    margin-bottom: 32px;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
     color: var(--color-text);
     text-align: center;
-    font-size: 1.8rem;
 }
 
+/* Form Group for Address (Manually defined to match FormInput) */
 .details-form-group {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .details-label {
@@ -24,41 +37,52 @@
     margin-bottom: 8px;
     font-weight: 500;
     color: var(--color-text);
+    font-size: 0.95rem;
 }
 
 .details-textarea {
     width: 100%;
+    min-height: 100px;
     padding: 14px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-sm, 8px);
     border: 1px solid #E5E7EB;
-    font-family: var(--font-main);
-    min-height: 120px;
-    resize: vertical;
-    outline: none;
+    font-family: inherit;
+    font-size: 1rem;
     background-color: #F9FAFB;
     transition: all 0.2s;
-    font-size: 1rem;
+    resize: none;
 }
 
 .details-textarea:focus {
     background-color: white;
     border-color: #10B981;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    outline: none;
 }
 
 .details-textarea.error {
-    border-color: var(--color-error);
+    border-color: #EF4444;
 }
 
 .details-error-text {
-    color: var(--color-error);
+    color: #EF4444;
     font-size: 0.85rem;
     margin-top: 6px;
     display: block;
 }
 
+/* Submit Button */
 .details-submit-btn {
     width: 100%;
-    font-size: 1.1rem !important;
-    margin-top: 16px;
+    margin-top: 1rem;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 480px) {
+    .details-card {
+        padding: 1.5rem;
+    }
 }

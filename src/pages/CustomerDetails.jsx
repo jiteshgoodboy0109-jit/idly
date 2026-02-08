@@ -5,19 +5,30 @@ import FormInput from '../components/FormInput';
 import Button from '../components/Button';
 import '../styles/CustomerDetails.css';
 
+/**
+ * CustomerDetails Page
+ * Collects delivery information from the user.
+ * Built with a clean, manual-style structure for easy editing.
+ */
 const CustomerDetails = () => {
     const { userDetails, setUserDetails, cart } = useShop();
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
 
+    // If cart is empty, redirect to home
     if (cart.length === 0) {
         navigate('/');
         return null;
     }
 
+    /* 
+     * FORM HANDLERS
+     */
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUserDetails(prev => ({ ...prev, [name]: value }));
+
+        // Clear error when user types
         if (errors[name]) {
             setErrors(prev => ({ ...prev, [name]: '' }));
         }
@@ -40,14 +51,20 @@ const CustomerDetails = () => {
         }
     };
 
+    /* 
+     * RENDER COMPONENT
+     */
     return (
-        <div className="container section-padding animate-fade-in details-container">
-            <div className="glass-card details-card">
+        <div className="checkout-page-container details-page-manual">
+            <div className="details-card glass-panel animate-fade-in">
+
                 <h2 className="details-title">
                     Delivery Details
                 </h2>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="manual-form">
+
+                    {/* Receiver Name */}
                     <FormInput
                         label="Name / Receiver"
                         name="name"
@@ -57,6 +74,7 @@ const CustomerDetails = () => {
                         error={errors.name}
                     />
 
+                    {/* Phone Number */}
                     <FormInput
                         label="Mobile Number"
                         name="phone"
@@ -68,6 +86,7 @@ const CustomerDetails = () => {
                         maxLength="10"
                     />
 
+                    {/* Full Address */}
                     <div className="details-form-group">
                         <label className="details-label">Address</label>
                         <textarea

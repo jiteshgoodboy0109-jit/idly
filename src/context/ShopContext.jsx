@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import CartToast from '../components/CartToast';
 
 const ShopContext = createContext();
 
@@ -20,6 +21,9 @@ export const ShopProvider = ({ children }) => {
     // Order State
     const [order, setOrder] = useState(null);
 
+    // Toast State
+    const [toast, setToast] = useState({ visible: false, product: null });
+
     // Persistence
     useEffect(() => {
         localStorage.setItem('annapoorani_cart', JSON.stringify(cart));
@@ -40,6 +44,10 @@ export const ShopProvider = ({ children }) => {
             }
             return [...prev, { ...product, quantity }];
         });
+
+        // Trigger Toast
+        setToast({ visible: true, product });
+        setTimeout(() => setToast({ visible: false, product: null }), 3000);
     };
 
     const removeFromCart = (productId) => {
@@ -91,6 +99,11 @@ export const ShopProvider = ({ children }) => {
     return (
         <ShopContext.Provider value={value}>
             {children}
+            <CartToast
+                visible={toast.visible}
+                product={toast.product}
+                onClose={() => setToast({ visible: false, product: null })}
+            />
         </ShopContext.Provider>
     );
 };

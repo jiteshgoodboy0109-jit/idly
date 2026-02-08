@@ -7,6 +7,9 @@ export const SHOP_CONFIG = {
     blessing: "Served with Love & Devotion",
     logo: logo,
     banner: banner,
+    upiId: "8220945226-2@ybl",
+    merchantName: "Gliffy Foods",
+    whatsappNumber: "918220945226",
     contact: {
         email: "gliffyxstdio@gmail.com",
         phone: "+91 8220945226",

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ShopProvider } from './context/ShopContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import Products from './pages/Products';
 import Cart from './pages/Cart';
 import CustomerDetails from './pages/CustomerDetails';
@@ -14,6 +15,7 @@ function App() {
     return (
         <ShopProvider>
             <Router>
+                <ScrollToTop />
                 <div className="app-container">
                     <Navbar />
 

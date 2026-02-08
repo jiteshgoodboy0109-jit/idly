@@ -4,59 +4,73 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--color-gray-200);
-    padding: 16px 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 18px 0;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 12px 0;
+        background-color: rgba(255, 255, 255, 0.95);
+    }
 }
 
 .navbar-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .navbar-brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     font-weight: 800;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     color: var(--color-gray-900);
-    /* Solid Black as requested */
-    letter-spacing: -0.5px;
+    letter-spacing: -0.6px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.25rem;
+        letter-spacing: -0.4px;
+    }
 }
 
 .navbar-logo-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 8px;
 }
 
 .navbar-logo-img {
-    height: 40px;
-    /* Adjust based on preference, standard navbar logo size */
+    height: 36px;
     width: auto;
     object-fit: contain;
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    /* Bouncy premium feel */
 }
 
 .navbar-brand:hover .navbar-logo-img,
 .navbar-brand:active .navbar-logo-img {
-    transform: scale(1.15);
+    transform: scale(1.1);
 }
 
 .navbar-cart-link {
     position: relative;
     background: var(--color-gray-100);
-    /* Old style grey background */
-    padding: 10px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     color: var(--color-gray-600);
-    /* Subtle dark grey icon */
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
@@ -84,6 +98,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 128, 0, 0.3);
     border: 2px solid var(--color-white);
 }
