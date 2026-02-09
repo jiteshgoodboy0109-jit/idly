@@ -62,6 +62,10 @@ const Payment = () => {
         `&mc=${SHOP_CONFIG.mcc || '5411'}` +
         `&tr=${trId}`;
 
+    // FALLBACK LINK (Person-to-Person style):
+    // Removes the 'fixed amount' and 'merchant codes' which often trigger bank security limits
+    const fallbackUpiLink = `upi://pay?pa=${SHOP_CONFIG.upiId}&pn=${encodeURIComponent(SHOP_CONFIG.merchantName)}&tn=${encodeURIComponent('Order ' + trId)}`;
+
     /* 
      * PDF RECEIPT GENERATOR
      */
@@ -265,6 +269,18 @@ const Payment = () => {
                                         onClick={handleIntentClick}
                                     >
                                         Open Payment App <ChevronRight size={18} />
+                                    </a>
+                                </div>
+
+                                {/* Bank Limit Fallback */}
+                                <div className="bank-limit-fallback">
+                                    <p className="limit-alert"><strong>Bank Limit Error?</strong> If the app shows a limit error, use this link and type <strong>₹{totalAmount.toFixed(2)}</strong> manually.</p>
+                                    <a
+                                        href={fallbackUpiLink}
+                                        className="fallback-intent-btn"
+                                        onClick={handleIntentClick}
+                                    >
+                                        Alternative Pay Link
                                     </a>
                                 </div>
 

@@ -300,6 +300,46 @@
     transition: transform 0.2s ease;
 }
 
+/* Bank Limit Fallback Styles */
+.bank-limit-fallback {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #FFF9C4;
+    /* Light yellow background to grab attention */
+    border-radius: 12px;
+    border: 1.5px solid #FBC02D;
+    text-align: center;
+}
+
+.limit-alert {
+    font-size: 0.85rem;
+    color: #5D4037;
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.fallback-intent-btn {
+    display: inline-block;
+    background: white;
+    color: #F57F17;
+    border: 1.5px solid #F57F17;
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.fallback-intent-btn:hover {
+    background: #F57F17;
+    color: white;
+    transform: translateY(-2px);
+}
+
 .payment-wa-help-btn:hover {
     transform: translateY(-2px);
     opacity: 0.9;
