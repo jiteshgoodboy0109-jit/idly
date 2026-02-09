@@ -304,3 +304,49 @@
     transform: translateY(-2px);
     opacity: 0.9;
 }
+
+/* Return Nudge UI */
+.return-nudge-manual {
+    background: #E8F5E9;
+    border: 2px solid var(--color-primary-start);
+    border-radius: 16px;
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.nudge-icon {
+    font-size: 1.5rem;
+}
+
+.nudge-text strong {
+    display: block;
+    color: var(--color-primary-start);
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+
+.nudge-text p {
+    font-size: 0.85rem;
+    color: #444;
+    margin: 0;
+}
+
+@keyframes bounceSubtle {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.animate-bounce-subtle {
+    animation: bounceSubtle 1.5s ease-in-out infinite;
+}

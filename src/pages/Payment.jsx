@@ -17,6 +17,26 @@ const Payment = () => {
     const [utr, setUtr] = useState('');
     const [isVerifying, setIsVerifying] = useState(false);
     const [verificationStep, setVerificationStep] = useState(0); // 0: input, 1: connecting, 2: checking, 3: success
+    const [hasBeenToPaymentApp, setHasBeenToPaymentApp] = useState(false);
+    const [showReturnNudge, setShowReturnNudge] = useState(false);
+
+    // Detect when user returns from payment app
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible' && hasBeenToPaymentApp) {
+                setShowReturnNudge(true);
+                // Auto-scroll to UTR input
+                const utrInput = document.getElementById('utr-input-field');
+                if (utrInput) {
+                    utrInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    utrInput.focus();
+                }
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    }, [hasBeenToPaymentApp]);
 
     // Safety: don't stay here if cart is empty
     useEffect(() => {
@@ -105,6 +125,12 @@ const Payment = () => {
         window.open(whatsappUrl, '_blank');
     };
 
+    const handleIntentClick = () => {
+        setHasBeenToPaymentApp(true);
+        // Delay nudge display so it doesn't show immediately if the app switch is fast
+        setTimeout(() => { }, 2000);
+    };
+
     /* 
      * UTR VERIFICATION SIMULATOR
      */
@@ -116,6 +142,7 @@ const Payment = () => {
 
         setIsVerifying(true);
         setVerificationStep(1);
+        setShowReturnNudge(false);
 
         const orderId = `ORD-${Math.floor(Math.random() * 10000)}`;
 
@@ -212,14 +239,29 @@ const Payment = () => {
 
                                 {/* Mobile Only Instant Pay Button */}
                                 <div className="mobile-only-manual">
-                                    <a href={upiLink} className="intent-btn-manual">
+                                    <a
+                                        href={upiLink}
+                                        className="intent-btn-manual"
+                                        onClick={handleIntentClick}
+                                    >
                                         Open Payment App <ChevronRight size={18} />
                                     </a>
                                 </div>
 
+                                {showReturnNudge && (
+                                    <div className="return-nudge-manual animate-bounce-subtle">
+                                        <div className="nudge-icon">✅</div>
+                                        <div className="nudge-text">
+                                            <strong>Finished Paying?</strong>
+                                            <p>Paste your 12-digit UTR below to confirm instantly!</p>
+                                        </div>
+                                    </div>
+                                )}
+
                                 <div className="manual-utr-form">
                                     <label>Enter 12-digit UTR/Transaction ID</label>
                                     <input
+                                        id="utr-input-field"
                                         type="text"
                                         placeholder="Transaction ID (12 digits)"
                                         maxLength={12}
