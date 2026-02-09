@@ -49,8 +49,12 @@ const Payment = () => {
 
     const totalAmount = getCartTotal();
 
-    // UPI Link for QR and Mobile Deep Linking
-    const upiLink = `upi://pay?pa=${SHOP_CONFIG.upiId}&pn=${encodeURIComponent(SHOP_CONFIG.merchantName)}&am=${totalAmount}&cu=INR&tn=${encodeURIComponent('Order from ' + SHOP_CONFIG.merchantName)}`;
+    // Technical "Merchant" Transaction ID
+    const trId = `TR-${Date.now()}`;
+
+    // Enhanced UPI Link with Merchant Category Code (mc) and Transaction Ref (tr)
+    // This makes the payment more stable and "Business-verified" for the bank
+    const upiLink = `upi://pay?pa=${SHOP_CONFIG.upiId}&pn=${encodeURIComponent(SHOP_CONFIG.merchantName)}&am=${totalAmount}&cu=INR&tn=${encodeURIComponent('Order ' + trId)}&mc=${SHOP_CONFIG.mcc}&tr=${trId}`;
 
     /* 
      * PDF RECEIPT GENERATOR
@@ -252,22 +256,43 @@ const Payment = () => {
                                     <div className="return-nudge-manual animate-bounce-subtle">
                                         <div className="nudge-icon">✅</div>
                                         <div className="nudge-text">
-                                            <strong>Finished Paying?</strong>
-                                            <p>Paste your 12-digit UTR below to confirm instantly!</p>
+                                            <strong>Payment Done?</strong>
+                                            <p>If you've finished paying in your app, click confirm below!</p>
                                         </div>
+                                        <button
+                                            className="direct-confirm-btn"
+                                            onClick={() => {
+                                                // Automatic confirmation simulation
+                                                setUtr('DIRECT_PAY'); // Internal flag
+                                                setIsVerifying(true);
+                                                setVerificationStep(1);
+                                                setTimeout(() => setVerificationStep(3), 2000);
+                                                const orderId = `ORD-${Math.floor(Math.random() * 10000)}`;
+                                                setTimeout(() => {
+                                                    downloadReceipt(orderId, totalAmount, cart);
+                                                    sendWhatsAppToOwner(orderId, totalAmount, cart);
+                                                    placeOrder();
+                                                    navigate('/success');
+                                                }, 3500);
+                                            }}
+                                        >
+                                            Confirm Order
+                                        </button>
                                     </div>
                                 )}
 
                                 <div className="manual-utr-form">
                                     <label>Enter 12-digit UTR/Transaction ID</label>
-                                    <input
-                                        id="utr-input-field"
-                                        type="text"
-                                        placeholder="Transaction ID (12 digits)"
-                                        maxLength={12}
-                                        value={utr}
-                                        onChange={(e) => setUtr(e.target.value.replace(/\D/g, ''))}
-                                    />
+                                    <div className="utr-input-wrapper">
+                                        <input
+                                            id="utr-input-field"
+                                            type="text"
+                                            placeholder="Transaction ID (12 digits)"
+                                            maxLength={12}
+                                            value={utr}
+                                            onChange={(e) => setUtr(e.target.value.replace(/\D/g, ''))}
+                                        />
+                                    </div>
                                     <p className="help-text">Found in your Bank Message/UPI History after payment</p>
                                 </div>
 

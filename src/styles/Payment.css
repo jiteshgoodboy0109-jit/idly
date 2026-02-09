@@ -335,6 +335,38 @@
     margin: 0;
 }
 
+.direct-confirm-btn {
+    margin-left: auto;
+    background: var(--color-primary-start);
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.direct-confirm-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+@media (max-width: 480px) {
+    .return-nudge-manual {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.8rem;
+    }
+
+    .direct-confirm-btn {
+        margin: 0;
+        width: 100%;
+    }
+}
+
 @keyframes bounceSubtle {
 
     0%,

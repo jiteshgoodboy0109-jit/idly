@@ -9,6 +9,7 @@ export const SHOP_CONFIG = {
     banner: banner,
     upiId: "8220945226-2@ybl",
     merchantName: "Gliffy Foods",
+    mcc: "5411", // Standard Grocery/Food Merchant Code
     whatsappNumber: "918220945226",
     contact: {
         email: "gliffyxstdio@gmail.com",
