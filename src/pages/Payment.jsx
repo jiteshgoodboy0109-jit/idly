@@ -14,7 +14,8 @@ import '../styles/Payment.css';
 const Payment = () => {
     const { cart, getCartTotal, placeOrder, userDetails } = useShop();
     const navigate = useNavigate();
-    const [utr, setUtr] = useState('');
+    const [receiptFile, setReceiptFile] = useState(null);
+    const [receiptPreview, setReceiptPreview] = useState(null);
     const [isVerifying, setIsVerifying] = useState(false);
     const [verificationStep, setVerificationStep] = useState(0); // 0: input, 1: connecting, 2: checking, 3: success
     const [hasBeenToPaymentApp, setHasBeenToPaymentApp] = useState(false);
@@ -25,11 +26,10 @@ const Payment = () => {
         const handleVisibilityChange = () => {
             if (document.visibilityState === 'visible' && hasBeenToPaymentApp) {
                 setShowReturnNudge(true);
-                // Auto-scroll to UTR input
-                const utrInput = document.getElementById('utr-input-field');
-                if (utrInput) {
-                    utrInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    utrInput.focus();
+                // Auto-scroll to Upload area
+                const uploadArea = document.getElementById('receipt-upload-section');
+                if (uploadArea) {
+                    uploadArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             }
         };
@@ -52,9 +52,15 @@ const Payment = () => {
     // Technical "Merchant" Transaction ID
     const trId = `TR-${Date.now()}`;
 
-    // Enhanced UPI Link with Merchant Category Code (mc) and Transaction Ref (tr)
-    // This makes the payment more stable and "Business-verified" for the bank
-    const upiLink = `upi://pay?pa=${SHOP_CONFIG.upiId}&pn=${encodeURIComponent(SHOP_CONFIG.merchantName)}&am=${totalAmount}&cu=INR&tn=${encodeURIComponent('Order ' + trId)}&mc=${SHOP_CONFIG.mcc}&tr=${trId}`;
+    // PERFECT SCANNER OPTIMIZATION:
+    // Using the most standard UPI URI format accepted by all apps (PhonePe, GPay, Paytm, BHIM)
+    const upiLink = `upi://pay?pa=${SHOP_CONFIG.upiId}` +
+        `&pn=${encodeURIComponent(SHOP_CONFIG.merchantName)}` +
+        `&am=${totalAmount.toFixed(2)}` +
+        `&cu=INR` +
+        `&tn=${encodeURIComponent('Order ' + trId)}` +
+        `&mc=${SHOP_CONFIG.mcc || '5411'}` +
+        `&tr=${trId}`;
 
     /* 
      * PDF RECEIPT GENERATOR
@@ -80,7 +86,7 @@ const Payment = () => {
 
         doc.setTextColor(255, 0, 0);
         doc.setFont("helvetica", "bold");
-        doc.text(`PAYMENT STATUS: PENDING (Admin Verification Required)`, 20, 55);
+        doc.text(`PAYMENT STATUS: PENDING (Receipt Uploaded)`, 20, 55);
         doc.setFont("helvetica", "normal");
         doc.setTextColor(0);
 
@@ -113,7 +119,7 @@ const Payment = () => {
         doc.setFontSize(8);
         doc.setFont("helvetica", "italic");
         doc.setTextColor(150);
-        doc.text('Thank you for shopping with us! Computer generated receipt.', 105, 280, { align: 'center' });
+        doc.text('Thank you for shopping with us! Receipt proof attached.', 105, 280, { align: 'center' });
 
         doc.save(`${orderId}_Receipt.pdf`);
     };
@@ -123,7 +129,7 @@ const Payment = () => {
      */
     const sendWhatsAppToOwner = (orderId, total, items) => {
         const itemText = items.map(i => `${i.quantity}x ${i.name}`).join('%0A');
-        const message = `*NEW ORDER RECEIVED*%0A%0A*Order ID:* ${orderId}%0A*Customer:* ${userDetails.name}%0A*Phone:* ${userDetails.phone}%0A*Address:* ${userDetails.address}%0A%0A*Items:*%0A${itemText}%0A%0A*Total Amount:* ₹${total.toFixed(2)}%0A*Status:* Payment Pending (UTR Proof Provided)%0A%0A_Please verify in bank account_`;
+        const message = `*NEW ORDER RECEIVED*%0A%0A*Order ID:* ${orderId}%0A*Customer:* ${userDetails.name}%0A*Phone:* ${userDetails.phone}%0A*Address:* ${userDetails.address}%0A%0A*Items:*%0A${itemText}%0A%0A*Total Amount:* ₹${total.toFixed(2)}%0A*Status:* Payment Done (Screenshot Proof in WA)%0A%0A_Note: Customer will attach screenshot in next message_`;
 
         const whatsappUrl = `https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${message}`;
         window.open(whatsappUrl, '_blank');
@@ -131,16 +137,26 @@ const Payment = () => {
 
     const handleIntentClick = () => {
         setHasBeenToPaymentApp(true);
-        // Delay nudge display so it doesn't show immediately if the app switch is fast
-        setTimeout(() => { }, 2000);
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setReceiptFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setReceiptPreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
     /* 
-     * UTR VERIFICATION SIMULATOR
+     * RECEIPT VERIFICATION SIMULATOR
      */
-    const handleVerifyUTR = () => {
-        if (utr.length !== 12) {
-            alert("Please enter a valid 12-digit UTR/Transaction ID");
+    const handleConfirmOrder = () => {
+        if (!receiptFile) {
+            alert("Please upload the payment receipt screenshot first!");
             return;
         }
 
@@ -254,54 +270,48 @@ const Payment = () => {
 
                                 {showReturnNudge && (
                                     <div className="return-nudge-manual animate-bounce-subtle">
-                                        <div className="nudge-icon">✅</div>
+                                        <div className="nudge-icon">📸</div>
                                         <div className="nudge-text">
-                                            <strong>Payment Done?</strong>
-                                            <p>If you've finished paying in your app, click confirm below!</p>
+                                            <strong>Finished Paying?</strong>
+                                            <p>Upload a screenshot of your success screen to confirm!</p>
                                         </div>
-                                        <button
-                                            className="direct-confirm-btn"
-                                            onClick={() => {
-                                                // Automatic confirmation simulation
-                                                setUtr('DIRECT_PAY'); // Internal flag
-                                                setIsVerifying(true);
-                                                setVerificationStep(1);
-                                                setTimeout(() => setVerificationStep(3), 2000);
-                                                const orderId = `ORD-${Math.floor(Math.random() * 10000)}`;
-                                                setTimeout(() => {
-                                                    downloadReceipt(orderId, totalAmount, cart);
-                                                    sendWhatsAppToOwner(orderId, totalAmount, cart);
-                                                    placeOrder();
-                                                    navigate('/success');
-                                                }, 3500);
-                                            }}
-                                        >
-                                            Confirm Order
-                                        </button>
                                     </div>
                                 )}
 
-                                <div className="manual-utr-form">
-                                    <label>Enter 12-digit UTR/Transaction ID</label>
-                                    <div className="utr-input-wrapper">
+                                <div id="receipt-upload-section" className="manual-receipt-form">
+                                    <label className="upload-label">Upload Payment Receipt Screenshot</label>
+
+                                    <div className={`upload-dropzone ${receiptFile ? 'has-file' : ''}`}>
                                         <input
-                                            id="utr-input-field"
-                                            type="text"
-                                            placeholder="Transaction ID (12 digits)"
-                                            maxLength={12}
-                                            value={utr}
-                                            onChange={(e) => setUtr(e.target.value.replace(/\D/g, ''))}
+                                            type="file"
+                                            id="receipt-upload"
+                                            accept="image/*"
+                                            onChange={handleFileChange}
+                                            className="hidden-file-input"
                                         />
+                                        <label htmlFor="receipt-upload" className="upload-trigger">
+                                            {receiptPreview ? (
+                                                <div className="receipt-preview-container">
+                                                    <img src={receiptPreview} alt="Receipt Preview" />
+                                                    <div className="change-overlay">Change Screenshot</div>
+                                                </div>
+                                            ) : (
+                                                <div className="upload-placeholder">
+                                                    <span className="upload-icon">📁</span>
+                                                    <span>Click to Upload Screenshot</span>
+                                                </div>
+                                            )}
+                                        </label>
                                     </div>
-                                    <p className="help-text">Found in your Bank Message/UPI History after payment</p>
+                                    <p className="help-text">Take a screenshot after payment and upload it here.</p>
                                 </div>
 
                                 <button
                                     className="manual-verify-btn"
-                                    onClick={handleVerifyUTR}
-                                    disabled={utr.length !== 12}
+                                    onClick={handleConfirmOrder}
+                                    disabled={!receiptFile}
                                 >
-                                    Verify & Confirm Order
+                                    {receiptFile ? 'Confirm Order' : 'Upload Receipt to Confirm'}
                                 </button>
 
                                 {/* Payment Help / Fallback Section */}
