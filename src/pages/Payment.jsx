@@ -226,7 +226,7 @@ const Payment = () => {
                                         value={utr}
                                         onChange={(e) => setUtr(e.target.value.replace(/\D/g, ''))}
                                     />
-                                    <p className="help-text">Found in your Bank Message/UPI History</p>
+                                    <p className="help-text">Found in your Bank Message/UPI History after payment</p>
                                 </div>
 
                                 <button
@@ -236,6 +236,24 @@ const Payment = () => {
                                 >
                                     Verify & Confirm Order
                                 </button>
+
+                                {/* Payment Help / Fallback Section */}
+                                <div className="payment-help-section">
+                                    <h4>Facing Payment Issues?</h4>
+                                    <ul>
+                                        <li><strong>Bank Limit Error?</strong> Try using a different UPI App (PhonePe, GPay, or Paytm).</li>
+                                        <li><strong>Payment Failed?</strong> Ensure you have sufficient balance and try again.</li>
+                                        <li><strong>Need Help?</strong> Click below to chat with us.</li>
+                                    </ul>
+                                    <a
+                                        href={`https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=I'm%20facing%20an%20issue%20with%20payment%20for%20my%20order.`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="payment-wa-help-btn"
+                                    >
+                                        Chat for Payment Support
+                                    </a>
+                                </div>
                             </div>
                         )}
                     </div>
