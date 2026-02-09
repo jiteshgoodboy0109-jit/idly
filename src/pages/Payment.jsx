@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useShop } from '../context/ShopContext';
 import { SHOP_CONFIG } from '../config';
 import { ShieldCheck, Receipt, ChevronRight, CheckCircle2, Loader2 } from 'lucide-react';
-import jsPDF from 'jspdf';
+import { generateInvoice } from './Invoice';
 import '../styles/Payment.css';
 
 /**
@@ -20,6 +20,7 @@ const Payment = () => {
     const [verificationStep, setVerificationStep] = useState(0); // 0: input, 1: connecting, 2: checking, 3: success
     const [hasBeenToPaymentApp, setHasBeenToPaymentApp] = useState(false);
     const [showReturnNudge, setShowReturnNudge] = useState(false);
+    const [showScreenshotReminder, setShowScreenshotReminder] = useState(false);
 
     // Detect when user returns from payment app
     useEffect(() => {
@@ -67,68 +68,6 @@ const Payment = () => {
     const fallbackUpiLink = `upi://pay?pa=${SHOP_CONFIG.upiId}&pn=${encodeURIComponent(SHOP_CONFIG.merchantName)}&tn=${encodeURIComponent('Order ' + trId)}`;
 
     /* 
-     * PDF RECEIPT GENERATOR
-     */
-    const downloadReceipt = (orderId, total, items) => {
-        const doc = new jsPDF();
-
-        // Brand Header
-        doc.setFontSize(22);
-        doc.setTextColor(0, 128, 0);
-        doc.text(SHOP_CONFIG.merchantName, 105, 20, { align: 'center' });
-
-        doc.setFontSize(12);
-        doc.setTextColor(100);
-        doc.text('Digital Purchase Receipt', 105, 30, { align: 'center' });
-        doc.line(20, 35, 190, 35);
-
-        // Order Summary
-        doc.setFontSize(10);
-        doc.setTextColor(0);
-        doc.text(`Order ID: ${orderId}`, 20, 45);
-        doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 50);
-
-        doc.setTextColor(255, 0, 0);
-        doc.setFont("helvetica", "bold");
-        doc.text(`PAYMENT STATUS: PENDING (Receipt Uploaded)`, 20, 55);
-        doc.setFont("helvetica", "normal");
-        doc.setTextColor(0);
-
-        // Address Section
-        doc.text(`Customer: ${userDetails.name}`, 20, 65);
-        doc.text(`Phone: ${userDetails.phone}`, 20, 70);
-        doc.text(`Address: ${userDetails.address}`, 20, 75);
-
-        // Items Table
-        doc.line(20, 80, 190, 80);
-        doc.text('Item', 20, 85);
-        doc.text('Qty', 140, 85);
-        doc.text('Price', 170, 85);
-        doc.line(20, 88, 190, 88);
-
-        let y = 95;
-        items.forEach(item => {
-            doc.text(item.name, 20, y);
-            doc.text(item.quantity.toString(), 140, y);
-            doc.text(`Rs.${(item.price * item.quantity).toFixed(2)}`, 170, y);
-            y += 7;
-        });
-
-        doc.line(20, y, 190, y);
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text(`Total Amount: Rs.${total.toFixed(2)}`, 170, y + 10, { align: 'right' });
-
-        // Final Footer
-        doc.setFontSize(8);
-        doc.setFont("helvetica", "italic");
-        doc.setTextColor(150);
-        doc.text('Thank you for shopping with us! Receipt proof attached.', 105, 280, { align: 'center' });
-
-        doc.save(`${orderId}_Receipt.pdf`);
-    };
-
-    /* 
      * SHOP OWNER WHATSAPP NOTIFIER
      */
     const sendWhatsAppToOwner = (orderId, total, items) => {
@@ -174,7 +113,7 @@ const Payment = () => {
         setTimeout(() => setVerificationStep(2), 1500);
         setTimeout(() => setVerificationStep(3), 3000);
         setTimeout(() => {
-            downloadReceipt(orderId, totalAmount, cart);
+            generateInvoice(orderId, totalAmount, cart, userDetails);
             sendWhatsAppToOwner(orderId, totalAmount, cart);
             placeOrder();
             navigate('/success');
@@ -261,27 +200,33 @@ const Payment = () => {
                                     <p>Scan ₹{totalAmount.toFixed(2)} to Pay</p>
                                 </div>
 
-                                {/* Mobile Only Instant Pay Button */}
-                                <div className="mobile-only-manual">
-                                    <a
-                                        href={upiLink}
-                                        className="intent-btn-manual"
-                                        onClick={handleIntentClick}
-                                    >
-                                        Open Payment App <ChevronRight size={18} />
-                                    </a>
-                                </div>
+                                <div className="payment-gates-hub">
+                                    {/* Gate 1: Standard Automatic Flow */}
+                                    <div className="gate-option gate-standard">
+                                        <div className="gate-badge">Recommended</div>
+                                        <a
+                                            href={upiLink}
+                                            className="gate-btn gate-btn-primary"
+                                            onClick={handleIntentClick}
+                                        >
+                                            <ChevronRight size={20} /> Open Payment App
+                                        </a>
+                                        <p className="gate-note">Fast & Secure via PhonePe/GPay</p>
+                                    </div>
 
-                                {/* Bank Limit Fallback */}
-                                <div className="bank-limit-fallback">
-                                    <p className="limit-alert"><strong>Bank Limit Error?</strong> If the app shows a limit error, use this link and type <strong>₹{totalAmount.toFixed(2)}</strong> manually.</p>
-                                    <a
-                                        href={fallbackUpiLink}
-                                        className="fallback-intent-btn"
-                                        onClick={handleIntentClick}
-                                    >
-                                        Alternative Pay Link
-                                    </a>
+                                    <div className="gate-separator">OR</div>
+
+                                    {/* Gate 2: Alternative Bypass Flow */}
+                                    <div className="gate-option gate-fallback">
+                                        <a
+                                            href={fallbackUpiLink}
+                                            className="gate-btn gate-btn-outline"
+                                            onClick={handleIntentClick}
+                                        >
+                                            Alternative Pay Link
+                                        </a>
+                                        <p className="gate-note">Safe bypass if first link shows <strong>"Bank Limit"</strong></p>
+                                    </div>
                                 </div>
 
                                 {showReturnNudge && (
@@ -358,6 +303,7 @@ const Payment = () => {
                 </div>
 
             </div>
+
         </div>
     );
 };
