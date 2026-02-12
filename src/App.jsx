@@ -10,8 +10,14 @@ import CustomerDetails from './pages/CustomerDetails';
 import Payment from './pages/Payment';
 import OrderSuccess from './pages/OrderSuccess';
 
-
 import CartSidebar from './components/CartSidebar';
+
+// Admin Imports
+import AdminLayout from './admin/AdminLayout';
+import AdminLogin from './admin/pages/Login';
+import Dashboard from './admin/pages/Dashboard';
+import ProductList from './admin/pages/ProductList';
+import ProductForm from './admin/pages/ProductForm';
 
 function App() {
     return (
@@ -25,10 +31,16 @@ function App() {
                     <main className="main-content">
                         <Routes>
                             <Route path="/" element={<Products />} />
-                            <Route path="/cart" element={<Cart />} />
-                            <Route path="/details" element={<CustomerDetails />} />
-                            <Route path="/payment" element={<Payment />} />
                             <Route path="/success" element={<OrderSuccess />} />
+
+                            {/* Admin Routes */}
+                            <Route path="/admin/login" element={<AdminLogin />} />
+                            <Route path="/admin" element={<AdminLayout />}>
+                                <Route path="dashboard" element={<Dashboard />} />
+                                <Route path="products" element={<ProductList />} />
+                                <Route path="products/new" element={<ProductForm />} />
+                                <Route path="products/edit/:id" element={<ProductForm />} />
+                            </Route>
                         </Routes>
                     </main>
 

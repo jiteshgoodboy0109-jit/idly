@@ -74,7 +74,7 @@ const CartSidebar = () => {
                     ) : (
                         <div className="sidebar-cart-items">
                             {cart.map(item => (
-                                <div key={item.id} className="sidebar-cart-item">
+                                <div key={item._id || item.id} className="sidebar-cart-item">
                                     <div className="sidebar-item-thumb">
                                         <img src={item.image} alt={item.name} />
                                     </div>
@@ -86,7 +86,7 @@ const CartSidebar = () => {
                                             <div className="sidebar-qty-picker">
                                                 <button
                                                     className="sidebar-qty-btn"
-                                                    onClick={() => updateQuantity(item.id, -1)}
+                                                    onClick={() => updateQuantity(item._id || item.id, -1)}
                                                     disabled={item.quantity <= 1}
                                                 >
                                                     <Minus size={14} />
@@ -94,14 +94,14 @@ const CartSidebar = () => {
                                                 <span className="sidebar-qty-val">{item.quantity}</span>
                                                 <button
                                                     className="sidebar-qty-btn"
-                                                    onClick={() => updateQuantity(item.id, 1)}
+                                                    onClick={() => updateQuantity(item._id || item.id, 1)}
                                                 >
                                                     <Plus size={14} />
                                                 </button>
                                             </div>
                                             <button
                                                 className="sidebar-remove-btn"
-                                                onClick={() => removeFromCart(item.id)}
+                                                onClick={() => removeFromCart(item._id || item.id)}
                                             >
                                                 <Trash2 size={18} />
                                             </button>

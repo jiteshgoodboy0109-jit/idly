@@ -36,10 +36,11 @@ export const ShopProvider = ({ children }) => {
     // Actions
     const addToCart = (product, quantity = 1) => {
         setCart(prev => {
-            const existing = prev.find(item => item.id === product.id);
+            const productId = product._id || product.id;
+            const existing = prev.find(item => (item._id || item.id) === productId);
             if (existing) {
                 return prev.map(item =>
-                    item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+                    (item._id || item.id) === productId ? { ...item, quantity: item.quantity + quantity } : item
                 );
             }
             return [...prev, { ...product, quantity }];
@@ -51,12 +52,12 @@ export const ShopProvider = ({ children }) => {
     };
 
     const removeFromCart = (productId) => {
-        setCart(prev => prev.filter(item => item.id !== productId));
+        setCart(prev => prev.filter(item => (item._id || item.id) !== productId));
     };
 
     const updateQuantity = (productId, delta) => {
         setCart(prev => prev.map(item => {
-            if (item.id === productId) {
+            if ((item._id || item.id) === productId) {
                 const newQty = Math.max(1, item.quantity + delta);
                 return { ...item, quantity: newQty };
             }

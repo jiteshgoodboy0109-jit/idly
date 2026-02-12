@@ -5,12 +5,25 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server": "nodemon server/server.js",
+    "client": "vite",
+    "dev:full": "concurrently \"npm run server\" \"npm run client\"",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "colors": "^1.4.0",
+    "concurrently": "^9.2.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "jspdf": "^4.1.0",
     "lucide-react": "^0.344.0",
+    "mongodb": "^7.1.0",
+    "mongoose": "^9.2.1",
+    "multer": "^2.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.1"
@@ -19,6 +32,7 @@
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.1.4"
+    "nodemon": "^3.1.11",
+    "vite": "^7.3.1"
   }
 }
