@@ -6,7 +6,7 @@ import { SHOP_CONFIG } from '../config';
 import '../styles/Navbar.css';
 
 const Navbar = () => {
-    const { cart } = useShop();
+    const { cart, toggleCart } = useShop();
 
     return (
         <nav className="navbar">
@@ -18,14 +18,14 @@ const Navbar = () => {
                     <span>{SHOP_CONFIG.name}</span>
                 </Link>
 
-                <Link to="/cart" className="navbar-cart-link">
+                <button className="navbar-cart-link" onClick={toggleCart} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
                     <ShoppingBasket size={24} />
                     {cart.length > 0 && (
                         <span className="cart-badge animate-fade-in">
                             {cart.length}
                         </span>
                     )}
-                </Link>
+                </button>
             </div>
         </nav>
     );

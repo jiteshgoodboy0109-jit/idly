@@ -83,6 +83,10 @@ export const ShopProvider = ({ children }) => {
         return newOrder;
     };
 
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+    const toggleCart = () => setIsCartOpen(!isCartOpen);
+
     const value = {
         cart,
         addToCart,
@@ -93,7 +97,10 @@ export const ShopProvider = ({ children }) => {
         userDetails,
         setUserDetails,
         order,
-        placeOrder
+        placeOrder,
+        isCartOpen,
+        setIsCartOpen,
+        toggleCart
     };
 
     return (

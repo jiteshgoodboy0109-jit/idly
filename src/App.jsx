@@ -11,11 +11,14 @@ import Payment from './pages/Payment';
 import OrderSuccess from './pages/OrderSuccess';
 
 
+import CartSidebar from './components/CartSidebar';
+
 function App() {
     return (
         <ShopProvider>
             <Router>
                 <ScrollToTop />
+                <CartSidebar />
                 <div className="app-container">
                     <Navbar />
 
