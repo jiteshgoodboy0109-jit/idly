@@ -42,7 +42,7 @@ const ProductCard = ({ product, addToCart }) => {
             {/* Variant Selector - Static for now */}
             <div className="variant-selector">
                 <select value={unit} onChange={(e) => setUnit(e.target.value)}>
-                    <option value={product.unit}>{product.unit} - ₹{product.price}</option>
+                    <option value={product.unit}>{product.unit}</option>
                 </select>
             </div>
 
