@@ -71,11 +71,11 @@ const OrderSuccess = () => {
                 <div className="manual-order-card animate-card-reveal">
                     <div className="manual-order-row">
                         <span>Order ID</span>
-                        <span className="order-value">{order.id}</span>
+                        <span className="order-value">{order._id || order.id}</span>
                     </div>
                     <div className="manual-order-row">
                         <span>Total Paid</span>
-                        <span className="order-value highlight-amount">₹{order.total}</span>
+                        <span className="order-value highlight-amount">₹{order.totalPrice || order.total}</span>
                     </div>
                     <div className="manual-order-row">
                         <span>Order Status</span>

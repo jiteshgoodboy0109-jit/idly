@@ -34,6 +34,9 @@ function AppContent() {
                 <main className="main-content">
                     <Routes>
                         <Route path="/" element={<Products />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/details" element={<CustomerDetails />} />
+                        <Route path="/payment" element={<Payment />} />
                         <Route path="/success" element={<OrderSuccess />} />
 
                         {/* Admin Routes */}

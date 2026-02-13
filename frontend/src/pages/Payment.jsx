@@ -97,7 +97,7 @@ const Payment = () => {
     /* 
      * RECEIPT VERIFICATION SIMULATOR
      */
-    const handleConfirmOrder = () => {
+    const handleConfirmOrder = async () => {
         if (!receiptFile) {
             alert("Please upload the payment receipt screenshot first!");
             return;
@@ -109,15 +109,30 @@ const Payment = () => {
 
         const orderId = `ORD-${Math.floor(Math.random() * 10000)}`;
 
-        // Fake verification delay for professional feel
-        setTimeout(() => setVerificationStep(2), 1500);
-        setTimeout(() => setVerificationStep(3), 3000);
-        setTimeout(() => {
-            generateInvoice(orderId, totalAmount, cart, userDetails);
-            sendWhatsAppToOwner(orderId, totalAmount, cart);
-            placeOrder();
-            navigate('/success');
-        }, 4500);
+        // Optimized verification flow (Faster & Snappier)
+        setTimeout(() => setVerificationStep(2), 800); // reduced from 1500
+
+        setTimeout(async () => {
+            setVerificationStep(3);
+
+            try {
+                // Generate Invoice
+                generateInvoice(orderId, totalAmount, cart, userDetails);
+
+                // Send WhatsApp Notification
+                sendWhatsAppToOwner(orderId, totalAmount, cart);
+
+                // Place Order in Backend
+                await placeOrder();
+
+                // Navigate to Success
+                navigate('/success');
+            } catch (error) {
+                console.error("Order processing error:", error);
+                alert("Order placed locally but failed to sync. Don't worry, your WhatsApp proof is valid!");
+                navigate('/success');
+            }
+        }, 2000); // reduced from 4500 (Total wait ~2s instead of 4.5s)
     };
 
     /* 

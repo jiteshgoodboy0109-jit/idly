@@ -71,17 +71,45 @@ export const ShopProvider = ({ children }) => {
         return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
     };
 
-    const placeOrder = () => {
-        const newOrder = {
-            id: `ORD-${Math.floor(Math.random() * 10000)}`,
-            items: cart,
-            total: getCartTotal(),
-            date: new Date().toISOString(),
-            status: 'Confirmed'
-        };
-        setOrder(newOrder);
-        clearCart();
-        return newOrder;
+    const placeOrder = async () => {
+        try {
+            const orderData = {
+                orderItems: cart,
+                shippingAddress: userDetails,
+                totalPrice: getCartTotal(),
+            };
+
+            const res = await fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            });
+
+            if (!res.ok) {
+                throw new Error('Failed to create order');
+            }
+
+            const data = await res.json();
+
+            setOrder(data);
+            clearCart();
+            return data;
+        } catch (error) {
+            console.error("Order placement failed:", error);
+            // Fallback for offline/demo
+            const fallbackOrder = {
+                _id: `LOC-${Math.floor(Math.random() * 10000)}`,
+                items: cart,
+                totalPrice: getCartTotal(),
+                date: new Date().toISOString(),
+                status: 'Local'
+            };
+            setOrder(fallbackOrder);
+            clearCart();
+            return fallbackOrder;
+        }
     };
 
     const [isCartOpen, setIsCartOpen] = useState(false);

@@ -35,20 +35,24 @@ const Dashboard = () => {
         const fetchData = async () => {
             try {
                 // Fetch Products for stats
-                const res = await fetch('/api/products');
-                const products = await res.json();
+                const resProducts = await fetch('/api/products');
+                const products = await resProducts.json();
 
-                // Calculate real stats
+                // Fetch Order Stats
+                const resOrders = await fetch('/api/orders/stats');
+                const orderStats = await resOrders.json();
+
+                // Calculate real product stats
                 const totalProducts = products.length;
-                // Calculate total potential revenue (Inventory Value)
                 const inventoryValue = products.reduce((acc, p) => acc + (p.price * p.stock), 0);
 
                 setStats(prev => ({
                     ...prev,
-                    totalItemsSold: totalProducts, // Using this field for Total Products count
+                    totalItemsSold: totalProducts,
                     totalSales: inventoryValue,
-                    usersCount: 0, // Placeholder until user API is connected
-                    totalOrders: 0 // Placeholder until order API is connected
+                    usersCount: orderStats.uniqueCustomers || 0, // Real customer count
+                    totalOrders: orderStats.totalOrders || 0,     // Real total orders
+                    revenue: orderStats.totalSales || 0           // Real revenue
                 }));
             } catch (e) {
                 console.error("Error fetching dashboard data:", e);
