@@ -1,408 +1,299 @@
-# Gliffy Foods - E-Commerce Website
+# 🍚 Annapoorani Idly Shop - E-Commerce Platform
 
-## 🌟 Overview
+A full-stack e-commerce web application for selling Idly Maavu (Idly batter) and Dosa Maavu products, built with React, Node.js, Express, and MongoDB.
 
-This is a modern, production-ready e-commerce website for **Gliffy Foods**, specializing in Idly Maavu (Idli batter) and related products. The website features a complete shopping experience with UPI payment integration, WhatsApp notifications, and a seamless mobile-first design.
-
----
-
-## 📁 Project Structure
-
-```
-idly-web/
-├── public/
-│   └── assets/           # Product images and static assets
-├── src/
-│   ├── components/       # Reusable React components
-│   │   ├── Navbar.jsx
-│   │   ├── Footer.jsx
-│   │   └── ScrollToTop.jsx
-│   ├── context/
-│   │   └── ShopContext.jsx    # Global state management
-│   ├── data/
-│   │   └── products.js        # Product catalog
-│   ├── pages/             # Main application pages
-│   │   ├── Products.jsx       # Product listing page
-│   │   ├── Cart.jsx           # Shopping cart
-│   │   ├── CustomerDetails.jsx # Customer information form
-│   │   ├── Payment.jsx        # Payment & order confirmation
-│   │   └── OrderSuccess.jsx   # Order success page
-│   ├── styles/           # CSS stylesheets
-│   │   ├── index.css          # Global styles & theme
-│   │   ├── Navbar.css
-│   │   ├── Products.css
-│   │   ├── Cart.css
-│   │   ├── Payment.css
-│   │   └── OrderSuccess.css
-│   ├── config.js         # Shop configuration (UPI, WhatsApp, etc.)
-│   ├── App.jsx           # Main app component with routing
-│   └── main.jsx          # Application entry point
-├── HOSTING_GUIDE.md      # Deployment instructions
-├── MERCHANT_UPGRADE.md   # Business UPI account guide
-├── vite.config.js        # Vite build configuration
-├── vercel.json           # Vercel deployment config
-└── package.json          # Dependencies and scripts
-```
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Node](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)
+![React](https://img.shields.io/badge/react-18.2.0-blue.svg)
 
 ---
 
-## 🚀 How to Run
+## ✨ Features
+
+### Customer Features
+- 🛍️ Browse products with beautiful UI
+- 🛒 Shopping cart with side drawer
+- 📦 Order placement and tracking
+- 📱 Responsive design (mobile, tablet, desktop)
+- ✅ Order success page with invoice download
+
+### Admin Panel Features
+- 📊 Dashboard with statistics and charts
+- 📈 Sales analytics and reporting
+- 🏷️ Product management (CRUD operations)
+- 👥 User management
+- 📥 Export reports to Excel
+- 🎨 Premium UI with Poppins font
+- 🔴 Red accent theme
+- 🔐 UI-only mode (works without backend)
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (v16 or higher)
+- Node.js (v14 or higher)
+- MongoDB Atlas account
 - npm or yarn
 
-### Installation & Development
+### Installation
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+1. **Clone the repository**
+```bash
+git clone https://github.com/jiteshgoodboy0109-jit/idly.git
+cd idly
+```
 
-2. **Start development server:**
-   ```bash
-   npm run dev
-   ```
-   The site will open at `http://localhost:5173`
+2. **Install dependencies**
+```bash
+npm install
+```
 
-3. **Build for production:**
-   ```bash
-   npm run build
-   ```
+3. **Configure environment variables**
 
-4. **Preview production build:**
-   ```bash
-   npm run preview
-   ```
+Create a `.env` file in the root directory:
+
+```env
+NODE_ENV=development
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+```
+
+4. **Whitelist your IP in MongoDB Atlas**
+- Go to MongoDB Atlas → Network Access
+- Add your current IP address
+
+5. **Seed database (optional)**
+```bash
+node server/seeder.js
+```
+
+6. **Run the application**
+```bash
+npm run dev:full
+```
+
+The application will be available at:
+- **Frontend**: http://localhost:5174/
+- **Backend API**: http://localhost:5000/
+- **Admin Panel**: http://localhost:5174/#/admin/login
 
 ---
 
-## 📱 Application Flow
+## 📦 Available Scripts
 
-### 1. **Products Page** (`/`)
-- **Purpose:** Browse and add products to cart
-- **Features:**
-  - Grid layout of all available products
-  - Product cards with images, names, prices
-  - "Add to Cart" buttons with quantity controls
-  - Real-time cart badge in navbar
-  - Responsive design for mobile/desktop
-
-### 2. **Cart Page** (`/cart`)
-- **Purpose:** Review selected items before checkout
-- **Features:**
-  - List of all cart items with quantities
-  - Ability to increase/decrease quantities
-  - Remove items from cart
-  - Total price calculation
-  - "Proceed to Checkout" button
-  - Empty cart validation
-
-### 3. **Customer Details Page** (`/customer-details`)
-- **Purpose:** Collect customer information
-- **Features:**
-  - Form fields: Name, Phone, Address
-  - Input validation
-  - Data stored in localStorage
-  - "Continue to Payment" button
-  - Auto-redirect if cart is empty
-
-### 4. **Payment Page** (`/payment`) ⭐ MAIN FEATURE
-- **Purpose:** Complete payment and confirm order
-- **Features:** See detailed section below
-
-### 5. **Order Success Page** (`/success`)
-- **Purpose:** Confirmation screen after order placement
-- **Features:**
-  - Success animation
-  - Order confirmation message
-  - "Continue Shopping" button
-  - Auto-redirect if no order exists
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Run frontend only (Vite dev server) |
+| `npm run server` | Run backend only (Node.js server) |
+| `npm run dev:full` | Run both frontend and backend concurrently |
+| `npm run build` | Build frontend for production |
+| `npm run preview` | Preview production build |
+| `node server/seeder.js` | Seed database with sample data |
 
 ---
 
-## 💳 Payment System - Detailed Explanation
+## 🏗️ Project Structure
 
-The payment page is the **core feature** of this website. Here's exactly how it works:
-
-### Visual Layout
-
-The page is split into two sections:
-
-**LEFT SIDE: Bill Summary**
-- Shop name and logo
-- List of ordered items with quantities
-- Total amount
-- Customer details (name, phone, address)
-
-**RIGHT SIDE: Payment Hub**
-- QR code for UPI payment
-- Two payment options (gates)
-- Receipt upload section
-- WhatsApp notification system
+```
+idly/
+├── server/                 # Backend (Node.js + Express)
+│   ├── config/            # Database configuration
+│   ├── controllers/       # Route controllers
+│   ├── middleware/        # Auth & error handling
+│   ├── models/            # Mongoose models
+│   ├── routes/            # API routes
+│   ├── data/              # Sample data for seeding
+│   ├── seeder.js          # Database seeder
+│   └── server.js          # Express server entry point
+├── src/                   # Frontend (React + Vite)
+│   ├── admin/             # Admin panel components
+│   │   ├── pages/         # Dashboard, Products, etc.
+│   │   └── AdminLayout.jsx
+│   ├── components/        # Reusable components
+│   ├── context/           # React Context (state management)
+│   ├── pages/             # Customer-facing pages
+│   ├── styles/            # CSS files
+│   ├── App.jsx            # Main app component
+│   └── main.jsx           # React entry point
+├── public/                # Static assets
+├── .env                   # Environment variables
+├── package.json           # Dependencies
+├── vite.config.js         # Vite configuration
+└── README.md              # This file
+```
 
 ---
 
-### Payment Flow - Step by Step
+## 🔑 Admin Panel Access
 
-#### **Step 1: Customer Arrives at Payment Page**
-```
-User sees:
-├── Bill on left side
-└── Payment hub on right side
-    ├── QR Code (₹60.00)
-    └── Two payment buttons:
-        ├── "Open Payment App" (Recommended)
-        └── "Alternative Pay Link" (Bypass)
-```
+### UI-Only Mode (No Backend Required)
+- URL: `http://localhost:5174/#/admin/login`
+- Login with **any email and password**
+- Features mock data for demonstration
 
-#### **Step 2: Customer Chooses Payment Method**
+### With Backend (Real Data)
+- URL: `http://localhost:5174/#/admin/login`
+- **Email**: `jiteshgoodboy.0109@gmail.com`
+- **Password**: `12345678`
+- Requires backend server running and database seeded
 
-**Option A: Standard Payment (Recommended)**
-- Customer clicks "Open Payment App" button
-- UPI deep link opens their payment app (PhonePe/GPay/Paytm)
-- Amount is pre-filled: ₹60.00
-- Customer completes payment in the app
+---
 
-**Option B: Alternative Payment (Bank Limit Bypass)**
-- If the first option shows "Bank Limit Error"
-- Customer clicks "Alternative Pay Link"
-- UPI app opens WITHOUT pre-filled amount
-- Customer manually types ₹60.00
-- This bypasses bank security limits on personal accounts
+## 🛠️ Tech Stack
 
-**Technical Details:**
-```javascript
-// Standard UPI Link (with amount)
-upi://pay?pa=8420945204@pbl&pn=Gliffy%20Foods&am=60.00&cu=INR&tn=Order%20TR-123&mc=5411&tr=TR-123
+### Frontend
+- **React 18** - UI library
+- **Vite** - Build tool and dev server
+- **React Router** - Client-side routing
+- **Recharts** - Data visualization
+- **Lucide React** - Icons
+- **XLSX** - Excel export functionality
+- **jsPDF** - PDF generation
 
-// Alternative UPI Link (without amount - bypass)
-upi://pay?pa=8420945204@pbl&pn=Gliffy%20Foods&tn=Order%20TR-123
-```
+### Backend
+- **Node.js** - Runtime environment
+- **Express** - Web framework
+- **MongoDB** - Database
+- **Mongoose** - ODM for MongoDB
+- **JWT** - Authentication
+- **bcryptjs** - Password hashing
+- **Multer** - File uploads
+- **CORS** - Cross-origin resource sharing
 
-#### **Step 3: Payment Completion Detection**
-
-When the customer returns from the payment app:
-```
-Browser detects visibility change
-    ↓
-Shows green "Return Nudge" box
-    ↓
-Message: "Finished Paying? Upload a screenshot!"
-    ↓
-Auto-scrolls to upload section
-```
-
-#### **Step 4: Screenshot Upload**
-
-Customer uploads payment receipt:
-```
-1. Clicks upload area (dashed border box)
-2. Selects screenshot from gallery
-3. Preview appears instantly
-4. "Confirm Order" button activates (green)
-```
-
-**Technical Implementation:**
-```javascript
-const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setReceiptFile(file);
-    // Create preview
-    const reader = new FileReader();
-    reader.onloadend = () => {
-        setReceiptPreview(reader.result);
-    };
-    reader.readAsDataURL(file);
-};
-```
-
-#### **Step 5: Order Confirmation**
-
-Customer clicks "Confirm Order":
-```
-1. Verification animation starts (1.5 seconds)
-   - "Connecting..."
-   - "Verifying UTR..."
-   - "Success! Processing Order..."
-
-2. PDF receipt downloads to customer's device
-   - Contains: Order ID, Items, Amount, Customer details
-   - Status: "PENDING (Receipt Uploaded)"
-
-3. ✨ NEW: Screenshot Reminder Popup appears
-```
-
-#### **Step 6: Screenshot Reminder Modal** ⭐ NEW FEATURE
-
-A beautiful popup appears with:
-```
-┌─────────────────────────────────┐
-│         ✅ (animated icon)       │
-│     Order Confirmed!            │
-│                                 │
-│  📎 Important Next Step:        │
-│  1. WhatsApp will open          │
-│  2. Attach payment screenshot   │
-│  3. Send message                │
-│                                 │
-│  [Open WhatsApp & Send Order]   │
-└─────────────────────────────────┘
-```
-
-**Why this popup?**
-- Ensures customer doesn't forget to attach screenshot
-- Clear step-by-step instructions
-- Professional user experience
-- Blocks screen until acknowledged
-
-#### **Step 7: WhatsApp Notification**
-
-Customer clicks "Open WhatsApp & Send Order":
-```
-1. WhatsApp opens with pre-filled message:
-
-   *NEW ORDER RECEIVED*
-   
-   *Order ID:* ORD-1234
-   *Customer:* John Doe
-   *Phone:* 9876543210
-   *Address:* 123 Main St, City
-   
-   *Items:*
-   2x Idly Maavu (1kg)
-   
-   *Total Amount:* ₹60.00
-   *Status:* Payment Done (Screenshot Proof in WA)
-   
-   _Note: Customer will attach screenshot in next message_
-
-2. Customer manually attaches the screenshot they uploaded
-3. Customer sends message to owner
-4. Customer is redirected to Success page
-```
-
-**Technical Implementation:**
-```javascript
-const sendWhatsAppToOwner = (orderId, total, items) => {
-    const itemText = items.map(i => `${i.quantity}x ${i.name}`).join('%0A');
-    const message = `*NEW ORDER RECEIVED*%0A%0A*Order ID:* ${orderId}...`;
-    const whatsappUrl = `https://wa.me/918420945204?text=${message}`;
-    window.open(whatsappUrl, '_blank');
-};
-```
+### Development Tools
+- **Concurrently** - Run multiple commands
+- **Nodemon** - Auto-restart server
+- **dotenv** - Environment variables
 
 ---
 
 ## 🎨 Design Features
 
-### Theme Colors
-- **Primary:** Green (`#008000`) - Professional, fresh, food-related
-- **Accents:** White background, clean typography
-- **Shadows:** Subtle depth with green glow effects
-
-### Responsive Design
-- **Mobile-first approach**
-- Breakpoints: 480px, 768px, 1024px
-- Touch-friendly buttons (minimum 44px height)
-- Optimized images and layouts
-
-### Animations
-- Fade-in effects on page load
-- Bounce animations for success states
-- Smooth hover transitions
-- Loading spinners during verification
+- ✅ Clean white background
+- ✅ Poppins font throughout
+- ✅ Red accent color (#ef4444)
+- ✅ Black text for readability
+- ✅ Responsive design
+- ✅ Glassmorphism effects
+- ✅ Smooth animations
+- ✅ Premium UI/UX
 
 ---
 
-## ⚙️ Configuration
+## 📱 Pages & Routes
 
-### Edit Shop Details (`src/config.js`)
+### Customer Routes
+- `/` - Home page (Products)
+- `/success` - Order success page
 
-```javascript
-export const SHOP_CONFIG = {
-    merchantName: 'Gliffy Foods',
-    upiId: '8420945204@pbl',        // Change to your UPI ID
-    whatsappNumber: '918420945204',  // Change to your WhatsApp
-    mcc: '5411',                     // Merchant Category Code
-};
+### Admin Routes
+- `/admin/login` - Admin login
+- `/admin/dashboard` - Dashboard with analytics
+- `/admin/products` - Product list
+- `/admin/products/new` - Add new product
+- `/admin/products/edit/:id` - Edit product
+
+---
+
+## 🔒 Environment Variables
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `NODE_ENV` | Environment mode | `development` |
+| `PORT` | Backend server port | `5000` |
+| `MONGO_URI` | MongoDB connection string | `mongodb+srv://...` |
+| `JWT_SECRET` | Secret key for JWT | `your_secret_key` |
+
+---
+
+## 🐛 Troubleshooting
+
+### Port Already in Use
+```bash
+npx kill-port 5000  # Kill backend
+npx kill-port 5174  # Kill frontend
 ```
 
-### Add/Edit Products (`src/data/products.js`)
+### MongoDB Connection Error
+1. Check IP whitelist in MongoDB Atlas
+2. Verify `MONGO_URI` in `.env`
+3. Ensure internet connection
 
-```javascript
-{
-    id: 1,
-    name: 'Idly Maavu (1kg)',
-    price: 60,
-    image: '/assets/logo1.png',
-    description: 'Fresh Idli batter'
-}
-```
-
----
-
-## 🚨 Important Notes
-
-### Payment Limitations
-- **WhatsApp cannot auto-attach files** - This is a WhatsApp security restriction
-- Customer must manually attach screenshot after WhatsApp opens
-- This is standard practice for small businesses
-
-### Bank Limits
-- Personal UPI accounts have daily transaction limits
-- **Solution:** Upgrade to PhonePe Business / Google Pay Business
-- See `MERCHANT_UPGRADE.md` for instructions
-
-### Hosting
-- Configured for Vercel/GitHub Pages
-- Uses relative paths (`base: './'` in vite.config.js)
-- HashRouter prevents 404 errors on refresh
-- See `HOSTING_GUIDE.md` for deployment
-
----
-
-## 📦 Dependencies
-
-```json
-{
-  "react": "^18.3.1",
-  "react-router-dom": "^7.1.3",
-  "lucide-react": "^0.469.0",
-  "jspdf": "^2.5.2"
-}
+### Module Not Found
+```bash
+rm -rf node_modules
+npm install
 ```
 
 ---
 
-## 🛠️ Troubleshooting
+## 📄 API Endpoints
 
-### "Bank Limit" Error
-- Use the "Alternative Pay Link" button
-- Or upgrade to Merchant UPI account
+### Products
+- `GET /api/products` - Get all products
+- `GET /api/products/:id` - Get product by ID
+- `POST /api/products` - Create product (Admin)
+- `PUT /api/products/:id` - Update product (Admin)
+- `DELETE /api/products/:id` - Delete product (Admin)
 
-### Images Not Loading After Hosting
-- Check `vite.config.js` has `base: './'`
-- Verify image paths in `products.js`
+### Users
+- `POST /api/users/login` - User login
+- `POST /api/users/` - Register user
 
-### WhatsApp Not Opening
-- Check `SHOP_CONFIG.whatsappNumber` format: `91XXXXXXXXXX`
-- Ensure no spaces or special characters
+### Orders
+- `GET /api/orders/stats` - Get order statistics (Admin)
+
+---
+
+## 🚀 Deployment
+
+### Frontend (Vercel)
+```bash
+npm run build
+# Deploy dist/ folder to Vercel
+```
+
+### Backend (Railway/Heroku)
+- Set environment variables
+- Deploy from GitHub repository
+
+---
+
+## 👥 Admin Credentials (After Seeding)
+
+- **Email**: jiteshgoodboy.0109@gmail.com
+- **Password**: 12345678
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👨‍💻 Author
+
+**Jitesh**
+- GitHub: [@jiteshgoodboy0109-jit](https://github.com/jiteshgoodboy0109-jit)
+
+---
+
+## 🙏 Acknowledgments
+
+- React team for the amazing library
+- MongoDB for the database platform
+- Vite for the blazing-fast build tool
+- All open-source contributors
 
 ---
 
 ## 📞 Support
 
-For issues or questions:
-- WhatsApp: +91 8420945204
-- Email: support@gliffyfoods.com
+For support, email jiteshgoodboy.0109@gmail.com or open an issue on GitHub.
 
 ---
 
-## 📄 License
-
-This project is proprietary software for Gliffy Foods.
-
----
-
-**Built with ❤️ using React + Vite**
+**Made with ❤️ for Annapoorani Idly Shop**
