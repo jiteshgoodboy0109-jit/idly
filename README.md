@@ -1,104 +1,190 @@
-# 🍚 Annapoorani Idly Shop
+# Idly Shop Website - Complete Guide
 
-A modern e-commerce platform for selling Idly & Dosa batter, built with the MERN stack (MongoDB, Express, React, Node.js).
+## 📋 Prerequisites
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Node](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen.svg)](https://nodejs.org)
-[![React](https://img.shields.io/badge/react-18.2.0-blue.svg)](https://reactjs.org)
+Before running the website, ensure you have:
 
----
-
-## 🏗️ Project Structure
-
-The project is split into two separate directories for better organization:
-
-```
-idly/
-├── frontend/        # React + Vite application
-│   ├── src/
-│   ├── public/
-│   └── vite.config.js
-│
-├── backend/         # Node.js + Express server
-│   ├── server/
-│   └── .env
-│
-└── package.json     # Root script to run both
-```
+1. **Node.js** installed (v14 or higher)
+2. **MongoDB Atlas** account with database set up
+3. **Git** (optional, for version control)
+4. **Code Editor** (VS Code recommended)
 
 ---
 
 ## 🚀 Quick Start (Recommended)
 
-1. **Install Dependencies** (Run this once in the root folder)
-   ```bash
-   npm run install:all
-   ```
+### 1. **Start Everything**
+Run this single command in the root folder (`d:\idly web`) to start both the Backend and Frontend:
+```bash
+npm run dev
+```
 
-2. **Start Everything**
-   ```bash
-   npm run dev
-   ```
-   *This starts both Backend (port 5000) and Frontend (port 5173/5174).*
+This single command starts:
+- ✅ Backend server (Port 5000)
+- ✅ Frontend development server (Port 5174)
+
+**Access your website at**: `http://localhost:5174/`
 
 ---
 
-## 📦 Run Separately (Optional)
+## 🔧 Detailed Setup Instructions
 
-If you prefer to run them in separate terminals:
+### Step 1: Install Dependencies
 
-**Terminal 1: Backend**
+First time setup only:
+
+```bash
+# Navigate to project folder
+cd "d:\idly web"
+
+# Install all dependencies
+npm install && npm run install:all
+```
+
+### Step 2: Configure Environment Variables
+
+Check your `.env` file in `backend/` folder has these settings:
+
+```env
+NODE_ENV=development
+PORT=5000
+MONOGO_URI=your_mongodb_connection_string
+JWT_SECRET=secret123
+```
+
+### Step 3: Whitelist Your IP in MongoDB Atlas
+
+1. Go to [MongoDB Atlas](https://cloud.mongodb.com/)
+2. Click **Network Access** in left sidebar
+3. Click **Add IP Address**
+4. Click **Add Current IP Address**
+5. Click **Confirm**
+
+---
+
+## 🎯 Running Options
+
+### Option A: Run Backend + Frontend Together (Best)
+
+```bash
+npm run dev
+```
+
+**Access**:
+- Main website: `http://localhost:5174/`
+- Admin panel: `http://localhost:5174/#/admin/login`
+- API: `http://localhost:5000/api/`
+
+---
+
+### Option B: Run Backend Only
+
 ```bash
 npm run server
 ```
 
-**Terminal 2: Frontend**
+**What it does**:
+- Starts only the backend server
+- Runs on `http://localhost:5000`
+- Good for testing API endpoints
+
+---
+
+### Option C: Run Frontend Only
+
 ```bash
 npm run client
 ```
 
----
-
-## 🌐 URLs
-
-- **Website**: http://localhost:5173/
-- **Backend API**: http://localhost:5000/
-- **Admin Panel**: http://localhost:5173/#/admin/login
+**What it does**:
+- Starts only the frontend
+- Runs on `http://localhost:5174`
+- **Note**: Admin panel won't work without backend for real data
 
 ---
 
-## ✨ Features
+## 📦 Seeding Sample Data (Optional)
 
-### Customer
-- 🛒 Premium Cart & Checkout
-- 📱 Mobile-First Design
-- 📄 Invoice Generation (PDF)
-- 💹 Dynamic Pricing
+To populate your database with sample products and users:
 
-### Admin Panel
-- 📊 Real-time Dashboard
-- 📦 Product Management (Add/Edit/Delete)
-- 📈 Sales Statistics
-- 🎨 Customizable Theme
-
----
-
-## 🔧 Configuration
-
-### Environment Variables (`backend/.env`)
-```env
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-NODE_ENV=development
+```bash
+node backend/server/seeder.js
 ```
 
-### IP Whitelist
-If you see MongoDB connection errors, ensure your IP is whitelisted in MongoDB Atlas.
+**Sample Admin Credentials**:
+- Email: `admin@example.com`
+- Password: `adminpassword`
 
 ---
 
-## 👨‍💻 Author
+## 🌐 Accessing Your Website
 
-**Jitesh**  
-Developed with ❤️ for Gliffy Shop.
+### Main Website (Customer View)
+```
+http://localhost:5174/
+```
+
+Features:
+- Browse products
+- Add to cart
+- Place orders
+- View order success page
+
+### Admin Panel (Admin View)
+```
+http://localhost:5174/#/admin/login
+```
+
+**Admin Features**:
+- Login with seeded admin credentials
+- View real statistics (Sales, Orders)
+- Manage products (Add/Edit/Delete)
+- Manage Orders (View/Update Status)
+- Download Excel Reports
+
+---
+
+## 📝 Available NPM Scripts
+
+```bash
+# Run both backend + frontend
+npm run dev
+
+# Run backend only
+npm run server
+
+# Run frontend only
+npm run client
+
+# Build for production
+npm run build
+```
+
+---
+
+## 🎨 Project Structure
+
+```
+d:\idly web\
+├── backend/            # Backend code
+│   ├── server/         # Server logic
+│   ├── .env            # Environment variables
+│   └── package.json    # Backend dependencies
+├── frontend/           # Frontend code
+│   ├── src/            # React source
+│   ├── vite.config.js  # Vite config
+│   └── package.json    # Frontend dependencies
+├── package.json        # Root dependencies & scripts
+└── README.md           # This file
+```
+
+---
+
+## 📞 Quick Reference
+
+| What | Command | URL |
+|------|---------|-----|
+| Full App | `npm run dev` | `http://localhost:5174/` |
+| Frontend Only | `npm run client` | `http://localhost:5174/` |
+| Backend Only | `npm run server` | `http://localhost:5000/` |
+| Admin Panel | - | `http://localhost:5174/#/admin/login` |

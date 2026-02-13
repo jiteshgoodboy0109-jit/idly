@@ -18,6 +18,7 @@ import AdminLogin from './admin/pages/Login';
 import Dashboard from './admin/pages/Dashboard';
 import ProductList from './admin/pages/ProductList';
 import ProductForm from './admin/pages/ProductForm';
+import OrderList from './admin/pages/OrderList';
 
 function AppContent() {
     const location = useLocation();
@@ -45,8 +46,10 @@ function AppContent() {
                             <Route index element={<Dashboard />} /> {/* Default to Dashboard */}
                             <Route path="dashboard" element={<Dashboard />} />
                             <Route path="products" element={<ProductList />} />
+                            <Route path="products" element={<ProductList />} />
                             <Route path="products/new" element={<ProductForm />} />
                             <Route path="products/edit/:id" element={<ProductForm />} />
+                            <Route path="orders" element={<OrderList />} />
                         </Route>
                     </Routes>
                 </main>

@@ -64,4 +64,37 @@ const getOrderStats = async (req, res) => {
     }
 };
 
-export { addOrderItems, getOrderStats };
+// @desc    Get all orders (For Admin Reporting)
+// @route   GET /api/orders
+// @access  Public/Admin
+const getOrders = async (req, res) => {
+    try {
+        const orders = await Order.find({}).sort({ createdAt: -1 });
+        res.json(orders);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching orders' });
+    }
+};
+
+// @desc    Update order status
+// @route   PUT /api/orders/:id/status
+// @access  Private/Admin
+const updateOrderStatus = async (req, res) => {
+    try {
+        const { status } = req.body;
+        const order = await Order.findById(req.params.id);
+
+        if (order) {
+            order.status = status;
+            const updatedOrder = await order.save();
+            res.json(updatedOrder);
+        } else {
+            res.status(404);
+            throw new Error('Order not found');
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating order status' });
+    }
+};
+
+export { addOrderItems, getOrderStats, getOrders, updateOrderStatus };

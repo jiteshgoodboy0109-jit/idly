@@ -10,25 +10,28 @@ import '../../styles/Admin.css';
 const Dashboard = () => {
     // Mock data for UI-only mode
     const [stats, setStats] = useState({
-        totalSales: 245680,
-        totalOrders: 1247,
-        totalItemsSold: 3891,
-        usersCount: 892,
+        totalSales: 1000,
+        totalOrders: 12,
+        totalItemsSold: 91,
+        usersCount: 20,
         salesData: [
-            { Month: 'Jan', Sales: 18500 },
-            { Month: 'Feb', Sales: 22300 },
-            { Month: 'Mar', Sales: 19800 },
-            { Month: 'Apr', Sales: 25600 },
-            { Month: 'May', Sales: 28900 },
-            { Month: 'Jun', Sales: 31200 },
-            { Month: 'Jul', Sales: 29500 },
-            { Month: 'Aug', Sales: 33800 },
-            { Month: 'Sep', Sales: 27400 },
-            { Month: 'Oct', Sales: 35200 },
-            { Month: 'Nov', Sales: 38900 },
-            { Month: 'Dec', Sales: 42500 }
+            { Month: 'Jan', Sales: 1850 },
+            { Month: 'Feb', Sales: 2230 },
+            { Month: 'Mar', Sales: 1980 },
+            { Month: 'Apr', Sales: 2560 },
+            { Month: 'May', Sales: 2890 },
+            { Month: 'Jun', Sales: 3120 },
+            { Month: 'Jul', Sales: 2950 },
+            { Month: 'Aug', Sales: 3380 },
+            { Month: 'Sep', Sales: 2740 },
+            { Month: 'Oct', Sales: 3520 },
+            { Month: 'Nov', Sales: 3890 },
+            { Month: 'Dec', Sales: 4250 }
         ]
     });
+
+    // State for real orders list
+    const [orders, setOrders] = useState([]);
 
     // Fetch real data from API
     useEffect(() => {
@@ -41,6 +44,11 @@ const Dashboard = () => {
                 // Fetch Order Stats
                 const resOrders = await fetch('/api/orders/stats');
                 const orderStats = await resOrders.json();
+
+                // Fetch All Orders for Reports
+                const resAllOrders = await fetch('/api/orders');
+                const allOrders = await resAllOrders.json();
+                setOrders(allOrders);
 
                 // Calculate real product stats
                 const totalProducts = products.length;
@@ -61,12 +69,60 @@ const Dashboard = () => {
         fetchData();
     }, []);
 
-    const downloadReport = () => {
-        if (!stats.salesData || stats.salesData.length === 0) return alert("No data to export");
+    const downloadReport = (type) => {
+        if (!orders || orders.length === 0) return alert("No order data available to export");
+
+        let filteredOrders = orders;
+        const now = new Date();
+        let filename = "Full_Order_Report.xlsx";
+
+        // Filter Logic
+        if (type === 'weekly') {
+            const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            filteredOrders = orders.filter(o => new Date(o.createdAt) >= oneWeekAgo);
+            filename = "Weekly_Order_Report.xlsx";
+        } else if (type === 'monthly') {
+            const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+            filteredOrders = orders.filter(o => new Date(o.createdAt) >= oneMonthAgo);
+            filename = "Monthly_Order_Report.xlsx";
+        }
+
+        if (filteredOrders.length === 0) return alert(`No orders found for ${type} report`);
+
+        // Format Data for Excel
+        const excelData = filteredOrders.map(order => ({
+            "Order ID": order._id,
+            "Date": new Date(order.createdAt).toLocaleDateString(),
+            "Time": new Date(order.createdAt).toLocaleTimeString(),
+            "Customer Name": order.shippingAddress?.name || 'Guest',
+            "Phone": order.shippingAddress?.phone || 'N/A',
+            "Address": order.shippingAddress?.address || 'N/A',
+            "Items": order.orderItems.map(i => `${i.name} (${i.qty})`).join(', '),
+            "Total Amount": `₹${order.totalPrice}`,
+            "Payment Status": order.isPaid ? "Paid (Confirmed)" : "Pending",
+            "Order Status": order.status
+        }));
+
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(stats.salesData);
-        XLSX.utils.book_append_sheet(wb, ws, "Monthly Sales");
-        XLSX.writeFile(wb, "Monthly_Sales_Report.xlsx");
+        const ws = XLSX.utils.json_to_sheet(excelData);
+
+        // Auto-width columns
+        const colWidths = [
+            { wch: 25 }, // ID
+            { wch: 12 }, // Date
+            { wch: 12 }, // Time
+            { wch: 20 }, // Name
+            { wch: 15 }, // Phone
+            { wch: 30 }, // Address
+            { wch: 40 }, // Items
+            { wch: 15 }, // Total
+            { wch: 20 }, // Payment
+            { wch: 15 }  // Status
+        ];
+        ws['!cols'] = colWidths;
+
+        XLSX.utils.book_append_sheet(wb, ws, "Orders");
+        XLSX.writeFile(wb, filename);
     };
 
     // Device Data (Mock for Visuals as requested)
@@ -79,10 +135,20 @@ const Dashboard = () => {
     return (
         <div className="performance-dashboard">
             {/* Header */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
-                <button onClick={downloadReport} className="admin-btn" style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#fff', color: '#1e293b', border: '1px solid #e2e8f0', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
-                    <Download size={18} /> Download Report
-                </button>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1e293b' }}>Dashboard Overview</h1>
+
+                <div style={{ display: 'flex', gap: '10px' }}>
+                    <button onClick={() => downloadReport('weekly')} className="admin-btn" style={{ background: '#fff', color: '#1e293b', border: '1px solid #e2e8f0' }}>
+                        <Download size={16} style={{ marginRight: 6 }} /> Weekly
+                    </button>
+                    <button onClick={() => downloadReport('monthly')} className="admin-btn" style={{ background: '#fff', color: '#1e293b', border: '1px solid #e2e8f0' }}>
+                        <Download size={16} style={{ marginRight: 6 }} /> Monthly
+                    </button>
+                    <button onClick={() => downloadReport('full')} className="admin-btn" style={{ background: '#1e293b', color: '#fff' }}>
+                        <Download size={16} style={{ marginRight: 6 }} /> Full Report
+                    </button>
+                </div>
             </div>
 
             {/* Top Grid: Performance Wave & Device Radial */}
