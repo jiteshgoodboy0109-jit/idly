@@ -12,25 +12,27 @@ const AdminLogin = () => {
         e.preventDefault();
         setError('');
 
+        // UI-only mode - mock authentication
         try {
-            const res = await fetch('http://localhost:5000/api/users/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+            // Simulate a brief loading delay for realism
+            await new Promise(resolve => setTimeout(resolve, 500));
 
-            const data = await res.json();
+            // Create mock admin data
+            const mockAdminData = {
+                _id: 'mock-admin-123',
+                name: 'Admin User',
+                email: email,
+                isAdmin: true,
+                token: 'mock-token-' + Date.now()
+            };
 
-            if (res.ok) {
-                localStorage.setItem('adminInfo', JSON.stringify(data));
-                navigate('/admin/dashboard');
-            } else {
-                setError(data.message || 'Login failed');
-            }
+            // Store in localStorage
+            localStorage.setItem('adminInfo', JSON.stringify(mockAdminData));
+
+            // Redirect to dashboard
+            navigate('/admin/dashboard');
         } catch (err) {
-            setError('Server error. Ensure backend is running.');
+            setError('Login failed. Please try again.');
         }
     };
 

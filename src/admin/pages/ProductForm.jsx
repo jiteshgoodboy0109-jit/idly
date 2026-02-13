@@ -22,7 +22,7 @@ const ProductForm = () => {
         if (isEditMode) {
             const fetchProduct = async () => {
                 try {
-                    const res = await fetch(`http://localhost:5000/api/products/${id}`);
+                    const res = await fetch(`/api/products/${id}`);
                     const data = await res.json();
                     setName(data.name);
                     setPrice(data.price);
@@ -57,8 +57,8 @@ const ProductForm = () => {
         try {
             const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
             const url = isEditMode
-                ? `http://localhost:5000/api/products/${id}`
-                : 'http://localhost:5000/api/products';
+                ? `/api/products/${id}`
+                : '/api/products';
 
             const method = isEditMode ? 'PUT' : 'POST';
 

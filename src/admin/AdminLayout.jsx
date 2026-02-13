@@ -7,12 +7,13 @@ const AdminLayout = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    useEffect(() => {
-        const adminInfo = localStorage.getItem('adminInfo');
-        if (!adminInfo) {
-            navigate('/admin/login');
-        }
-    }, [navigate]);
+    // UI-only mode - no authentication required
+    // useEffect(() => {
+    //     const adminInfo = localStorage.getItem('adminInfo');
+    //     if (!adminInfo) {
+    //         navigate('/admin/login');
+    //     }
+    // }, [navigate]);
 
     const logoutHandler = () => {
         localStorage.removeItem('adminInfo');
