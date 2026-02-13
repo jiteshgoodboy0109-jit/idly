@@ -1,4 +1,5 @@
 import Product from '../models/Product.js';
+import User from '../models/User.js';
 
 // @desc    Fetch all products
 // @route   GET /api/products
@@ -54,10 +55,26 @@ const createProduct = async (req, res) => {
     try {
         const { name, price, description, image, category, stock, weight, originalPrice, discount, unit } = req.body;
 
+        let userId;
+
+        // If generic auth is disabled, find the first admin user
+        if (req.user) {
+            userId = req.user._id;
+        } else {
+            const adminUser = await User.findOne({ isAdmin: true });
+            if (adminUser) {
+                userId = adminUser._id;
+            } else {
+                // Fallback if no admin exists (should generally not happen if seeded)
+                res.status(400);
+                throw new Error('No admin user found to associate with product');
+            }
+        }
+
         const product = new Product({
             name,
             price,
-            user: req.user._id,
+            user: userId,
             image,
             category,
             stock,

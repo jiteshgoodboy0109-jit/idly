@@ -4,71 +4,43 @@ import { Edit, Trash2, Plus } from 'lucide-react';
 import '../../styles/Admin.css';
 
 const ProductList = () => {
-    // Mock product data for UI-only mode
-    const [products, setProducts] = useState([
-        {
-            _id: '1',
-            name: 'Premium Idly Maavu (1 kg)',
-            price: 120,
-            stock: 150,
-            category: 'Idly Maavu',
-            image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=200&h=200&fit=crop'
-        },
-        {
-            _id: '2',
-            name: 'Organic Dosa Maavu (500g)',
-            price: 85,
-            stock: 200,
-            category: 'Dosa Maavu',
-            image: 'https://images.unsplash.com/photo-1630383249896-424e482df921?w=200&h=200&fit=crop'
-        },
-        {
-            _id: '3',
-            name: 'Special Idly Maavu (2 kg)',
-            price: 220,
-            stock: 75,
-            category: 'Idly Maavu',
-            image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=200&h=200&fit=crop'
-        },
-        {
-            _id: '4',
-            name: 'Ragi Dosa Maavu (1 kg)',
-            price: 140,
-            stock: 120,
-            category: 'Dosa Maavu',
-            image: 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=200&h=200&fit=crop'
-        },
-        {
-            _id: '5',
-            name: 'Wheat Dosa Maavu (500g)',
-            price: 95,
-            stock: 180,
-            category: 'Dosa Maavu',
-            image: 'https://images.unsplash.com/photo-1630383249896-424e482df921?w=200&h=200&fit=crop'
-        }
-    ]);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    // No API calls needed in UI-only mode
-    // const fetchProducts = async () => {
-    //     try {
-    //         const res = await fetch('/api/products');
-    //         const data = await res.json();
-    //         setProducts(data);
-    //     } catch (error) {
-    //         console.error('Error fetching products:', error);
-    //     }
-    // };
+    const fetchProducts = async () => {
+        try {
+            const res = await fetch('/api/products');
+            const data = await res.json();
+            setProducts(data);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    // useEffect(() => {
-    //     fetchProducts();
-    // }, []);
+    useEffect(() => {
+        fetchProducts();
+    }, []);
 
     const deleteHandler = async (id) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
-            // UI-only mode - just remove from state
-            setProducts(products.filter(p => p._id !== id));
-            alert('Product deleted (UI-only mode)');
+            try {
+                const res = await fetch(`/api/products/${id}`, {
+                    method: 'DELETE',
+                });
+
+                if (res.ok) {
+                    fetchProducts(); // Refresh list
+                    // alert('Product deleted');
+                } else {
+                    alert('Failed to delete product');
+                }
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                alert('Error deleting product');
+            }
         }
     };
 

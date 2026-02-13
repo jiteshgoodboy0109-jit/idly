@@ -55,7 +55,6 @@ const ProductForm = () => {
         };
 
         try {
-            const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
             const url = isEditMode
                 ? `/api/products/${id}`
                 : '/api/products';
@@ -66,7 +65,7 @@ const ProductForm = () => {
                 method,
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${adminInfo.token}`,
+                    // Authorization header removed as backend routes are currently unprotected
                 },
                 body: JSON.stringify(productData),
             });

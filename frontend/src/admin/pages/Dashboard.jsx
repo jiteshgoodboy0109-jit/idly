@@ -30,21 +30,32 @@ const Dashboard = () => {
         ]
     });
 
-    // No API calls needed in UI-only mode
-    // useEffect(() => {
-    //     const fetchStats = async () => {
-    //         try {
-    //             const token = JSON.parse(localStorage.getItem('adminInfo'))?.token;
-    //             if (!token) return;
-    //             const res = await fetch('/api/orders/stats', {
-    //                 headers: { Authorization: `Bearer ${token}` }
-    //             });
-    //             const data = await res.json();
-    //             if (data) setStats(data);
-    //         } catch (e) { console.error(e); }
-    //     };
-    //     fetchStats();
-    // }, []);
+    // Fetch real data from API
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Fetch Products for stats
+                const res = await fetch('/api/products');
+                const products = await res.json();
+
+                // Calculate real stats
+                const totalProducts = products.length;
+                // Calculate total potential revenue (Inventory Value)
+                const inventoryValue = products.reduce((acc, p) => acc + (p.price * p.stock), 0);
+
+                setStats(prev => ({
+                    ...prev,
+                    totalItemsSold: totalProducts, // Using this field for Total Products count
+                    totalSales: inventoryValue,
+                    usersCount: 0, // Placeholder until user API is connected
+                    totalOrders: 0 // Placeholder until order API is connected
+                }));
+            } catch (e) {
+                console.error("Error fetching dashboard data:", e);
+            }
+        };
+        fetchData();
+    }, []);
 
     const downloadReport = () => {
         if (!stats.salesData || stats.salesData.length === 0) return alert("No data to export");
@@ -145,14 +156,14 @@ const Dashboard = () => {
                     <div className="stat-icon-wrapper bg-orange-light">
                         <Package size={24} />
                     </div>
-                    <div className="stat-label">Items Sold</div>
+                    <div className="stat-label">Total Products</div>
                     <div className="stat-number">{stats.totalItemsSold || 0}</div>
                 </div>
                 <div className="stat-box">
                     <div className="stat-icon-wrapper bg-purple-light">
                         <CreditCard size={24} />
                     </div>
-                    <div className="stat-label">Total Revenue</div>
+                    <div className="stat-label">Inventory Value</div>
                     <div className="stat-number">₹{stats.totalSales?.toLocaleString()}</div>
                 </div>
                 <div className="stat-box">
