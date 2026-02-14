@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(express.json());
 // Routes
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/upload', uploadRoutes);
 
 app.get('/api/test', (req, res) => {
     res.send('API is running...');

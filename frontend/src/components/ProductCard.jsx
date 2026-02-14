@@ -8,6 +8,7 @@ import '../styles/ProductPage.css';
 const ProductCard = ({ product, addToCart }) => {
     const [quantity, setQuantity] = useState(1);
     const [unit, setUnit] = useState(product.unit); // Allow unit selection if needed
+    const [showFullImage, setShowFullImage] = useState(false);
 
     const handleDecrement = () => {
         if (quantity > 1) setQuantity(quantity - 1);
@@ -27,7 +28,7 @@ const ProductCard = ({ product, addToCart }) => {
             <div className="discount-badge">Save {product.discount}%</div>
 
             {/* Product Image */}
-            <div className="product-image-container">
+            <div className="product-image-container" onClick={() => setShowFullImage(true)}>
                 <img src={product.image} alt={product.name} className="product-image" />
             </div>
 
@@ -60,6 +61,16 @@ const ProductCard = ({ product, addToCart }) => {
                     </svg>
                 </button>
             </div>
+
+            {/* Full Image Modal */}
+            {showFullImage && (
+                <div className="image-modal-overlay" onClick={() => setShowFullImage(false)}>
+                    <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="close-modal-btn" onClick={() => setShowFullImage(false)}>×</button>
+                        <img src={product.image} alt={product.name} className="full-screen-image" />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

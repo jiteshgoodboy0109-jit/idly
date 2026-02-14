@@ -18,6 +18,8 @@ const ProductForm = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+    const [uploading, setUploading] = useState(false);
+
     useEffect(() => {
         if (isEditMode) {
             const fetchProduct = async () => {
@@ -38,6 +40,35 @@ const ProductForm = () => {
             fetchProduct();
         }
     }, [id, isEditMode]);
+
+    const uploadFileHandler = async (e) => {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        setUploading(true);
+
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            };
+
+            // Note: In fetch, when sending FormData, do NOT set Content-Type header manually.
+            // The browser will set it with the boundary automatically.
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await res.json();
+            setImage(data.image);
+            setUploading(false);
+        } catch (error) {
+            console.error(error);
+            setUploading(false);
+        }
+    };
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -110,14 +141,31 @@ const ProductForm = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Image URL</label>
-                        <input
-                            type="text"
-                            value={image}
-                            onChange={(e) => setImage(e.target.value)}
-                            placeholder="Enter image URL or path"
-                            required
-                        />
+                        <label>Product Image</label>
+                        <div className="image-upload-container">
+                            <input
+                                type="text"
+                                value={image}
+                                onChange={(e) => setImage(e.target.value)}
+                                placeholder="Enter image URL"
+                                className="image-url-input"
+                                style={{ marginBottom: '10px', display: 'none' }}
+                            />
+                            <div className="image-preview-box" onClick={() => document.getElementById('image-file').click()}>
+                                {image ? (
+                                    <img src={image} alt="Product Preview" className="image-preview" />
+                                ) : (
+                                    <div className="placeholder-text">Click to Upload Image</div>
+                                )}
+                            </div>
+                            <input
+                                type="file"
+                                id="image-file"
+                                onChange={uploadFileHandler}
+                                style={{ display: 'none' }}
+                            />
+                            {uploading && <div className="loading-text">Uploading...</div>}
+                        </div>
                     </div>
                     <div className="form-group">
                         <label>Category</label>

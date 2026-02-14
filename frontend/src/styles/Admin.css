@@ -543,3 +543,51 @@ body {
 * {
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
+
+/* Image Upload Styles */
+.image-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.image-preview-box {
+    width: 100%;
+    max-width: 300px;
+    height: 300px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.image-preview-box:hover {
+    border-color: #000;
+    background-color: #f0f0f0;
+}
+
+.image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.placeholder-text {
+    color: #888;
+    font-size: 16px;
+    text-align: center;
+    padding: 20px;
+}
+
+.loading-text {
+    margin-top: 10px;
+    color: #000;
+    font-weight: bold;
+}
