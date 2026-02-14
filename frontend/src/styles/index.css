@@ -147,6 +147,13 @@ button {
     flex: 1;
 }
 
+@media (max-width: 968px) {
+    .main-content {
+        padding-bottom: 80px;
+        /* Space for BottomNav */
+    }
+}
+
 /* Global Checkout Container - Perfect Centering on ALL Devices */
 .checkout-page-container {
     width: 100%;

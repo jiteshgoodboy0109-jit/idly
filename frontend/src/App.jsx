@@ -9,8 +9,11 @@ import Cart from './pages/Cart';
 import CustomerDetails from './pages/CustomerDetails';
 import Payment from './pages/Payment';
 import OrderSuccess from './pages/OrderSuccess';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 import CartSidebar from './components/CartSidebar';
+import BottomNav from './components/BottomNav';
 
 // Admin Imports
 import AdminLayout from './admin/AdminLayout';
@@ -39,13 +42,14 @@ function AppContent() {
                         <Route path="/details" element={<CustomerDetails />} />
                         <Route path="/payment" element={<Payment />} />
                         <Route path="/success" element={<OrderSuccess />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/contact" element={<Contact />} />
 
                         {/* Admin Routes */}
                         <Route path="/admin/login" element={<AdminLogin />} />
                         <Route path="/admin/*" element={<AdminLayout />}>
                             <Route index element={<Dashboard />} /> {/* Default to Dashboard */}
                             <Route path="dashboard" element={<Dashboard />} />
-                            <Route path="products" element={<ProductList />} />
                             <Route path="products" element={<ProductList />} />
                             <Route path="products/new" element={<ProductForm />} />
                             <Route path="products/edit/:id" element={<ProductForm />} />
@@ -55,6 +59,7 @@ function AppContent() {
                 </main>
 
                 {!isAdminRoute && <Footer />}
+                {!isAdminRoute && <BottomNav />}
             </div>
         </>
     );

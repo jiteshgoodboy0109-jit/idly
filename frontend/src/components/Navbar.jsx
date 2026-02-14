@@ -18,6 +18,12 @@ const Navbar = () => {
                     <span>{SHOP_CONFIG.name}</span>
                 </Link>
 
+                <div className="navbar-links desktop-only">
+                    <Link to="/" className="nav-link">Home</Link>
+                    <Link to="/about" className="nav-link">About Us</Link>
+                    <Link to="/contact" className="nav-link">Contact</Link>
+                </div>
+
                 <button className="navbar-cart-link" onClick={toggleCart} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
                     <ShoppingBasket size={24} />
                     {cart.length > 0 && (
