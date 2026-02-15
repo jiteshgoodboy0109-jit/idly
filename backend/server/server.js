@@ -35,8 +35,8 @@ app.get('/api/test', (req, res) => {
 });
 
 // Uploads folder
-// Uploads are now served by the frontend from public/assets
-// app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+// Uploads folder
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {

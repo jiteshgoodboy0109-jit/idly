@@ -7,17 +7,24 @@ const AdminLayout = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // UI-only mode - no authentication required
-    // useEffect(() => {
-    //     const adminInfo = localStorage.getItem('adminInfo');
-    //     if (!adminInfo) {
-    //         navigate('/admin/login');
-    //     }
-    // }, [navigate]);
+    // Protected routes are handled by AdminRoute, but we keep this as extra safety
+    useEffect(() => {
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            const user = JSON.parse(userInfo);
+            if (!user.isAdmin) {
+                navigate('/admin/login');
+            }
+        } else {
+            navigate('/admin/login');
+        }
+    }, [navigate]);
 
     const logoutHandler = () => {
-        localStorage.removeItem('adminInfo');
-        navigate('/admin/login');
+        if (window.confirm('Are you sure you want to logout?')) {
+            localStorage.removeItem('userInfo');
+            navigate('/admin/login');
+        }
     };
 
     const isActive = (path) => location.pathname === path ? 'active' : '';

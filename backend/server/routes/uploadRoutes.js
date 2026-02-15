@@ -2,12 +2,16 @@ import path from 'path';
 import express from 'express';
 import multer from 'multer';
 
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const router = express.Router();
 
 const storage = multer.diskStorage({
     destination(req, file, cb) {
-        // Go up from server/routes (2 levels) -> backend (1 level) -> frontend/public/assets
-        cb(null, path.join(__dirname, '../../frontend/public/assets'));
+        cb(null, 'uploads/');
     },
     filename(req, file, cb) {
         cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
@@ -35,8 +39,7 @@ const upload = multer({
 
 router.post('/', upload.single('image'), (req, res) => {
     res.send({
-        // Return path starting with /assets/ so frontend can serve it correctly
-        image: `/assets/${path.basename(req.file.path)}`,
+        image: `/${req.file.path.replace(/\\/g, '/')}`,
     });
 });
 
