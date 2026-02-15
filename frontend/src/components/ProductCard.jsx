@@ -35,12 +35,17 @@ const ProductCard = ({ product, addToCart }) => {
             {/* Product Details */}
             <h3 className="product-name">{product.name}</h3>
 
+            {/* Description */}
+            <p className="product-description" style={{ color: '#666', fontSize: '0.9rem', marginBottom: '10px' }}>
+                {product.description}
+            </p>
+
             <div className="product-pricing">
                 <span className="current-price">₹{product.price.toFixed(2)}</span>
                 <span className="original-price">₹{product.originalPrice.toFixed(2)}</span>
             </div>
 
-            {/* Variant Selector - Static for now */}
+            {/* Variant Selector - Displays exact unit from Admin */}
             <div className="variant-selector">
                 <select value={unit} onChange={(e) => setUnit(e.target.value)}>
                     <option value={product.unit}>{product.unit}</option>

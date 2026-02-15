@@ -11,7 +11,7 @@ const About = () => {
             <div className="about-hero-emotional">
                 <div className="hero-content">
                     <span className="hero-subtitle">Est. 1984 — A Family Tradition</span>
-                    <h1>Love Steamed in Softness</h1>
+                    <h1></h1>
                     <p>Every morning at dawn, we light our stove to bring you the taste of home.</p>
                     <button className="cta-sambar-orange">Discover Our Roots</button>
                 </div>
@@ -63,27 +63,6 @@ const About = () => {
                         </div>
                     </div>
                 </section>
-
-                {/* Gallery Section - Behind the Kitchen */}
-                <section className="gallery-section">
-                    <h2 className="section-title">Behind the Kitchen</h2>
-                    <div className="gallery-grid">
-                        <div className="gallery-item idly-shape">
-                            <img src={aboutSketch} alt="Batter Prep" />
-                        </div>
-                        <div className="gallery-item idly-shape">
-                            <img src={aboutFamily} alt="Steaming" />
-                        </div>
-                        <div className="gallery-item idly-shape">
-                            <img src={aboutTradition} alt="Serving" />
-                        </div>
-                    </div>
-                </section>
-
-                <div className="about-cta-section">
-                    <h2>Taste the Tradition Today</h2>
-                    <button className="cta-sambar-orange large">Order Your Plate of Home</button>
-                </div>
             </div>
         </div>
     );

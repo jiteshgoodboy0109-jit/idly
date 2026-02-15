@@ -17,6 +17,7 @@ import BottomNav from './components/BottomNav';
 
 // Admin Imports
 import AdminLayout from './admin/AdminLayout';
+import AdminRoute from './components/AdminRoute';
 import AdminLogin from './admin/pages/Login';
 import Dashboard from './admin/pages/Dashboard';
 import ProductList from './admin/pages/ProductList';
@@ -47,13 +48,17 @@ function AppContent() {
 
                         {/* Admin Routes */}
                         <Route path="/admin/login" element={<AdminLogin />} />
-                        <Route path="/admin/*" element={<AdminLayout />}>
-                            <Route index element={<Dashboard />} /> {/* Default to Dashboard */}
-                            <Route path="dashboard" element={<Dashboard />} />
-                            <Route path="products" element={<ProductList />} />
-                            <Route path="products/new" element={<ProductForm />} />
-                            <Route path="products/edit/:id" element={<ProductForm />} />
-                            <Route path="orders" element={<OrderList />} />
+
+                        {/* Protected Admin Routes */}
+                        <Route element={<AdminRoute />}>
+                            <Route path="/admin/*" element={<AdminLayout />}>
+                                <Route index element={<Dashboard />} />
+                                <Route path="dashboard" element={<Dashboard />} />
+                                <Route path="products" element={<ProductList />} />
+                                <Route path="products/new" element={<ProductForm />} />
+                                <Route path="products/edit/:id" element={<ProductForm />} />
+                                <Route path="orders" element={<OrderList />} />
+                            </Route>
                         </Route>
                     </Routes>
                 </main>

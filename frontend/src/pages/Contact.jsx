@@ -43,13 +43,14 @@ const Contact = () => {
         <div className="contact-page">
             <div className="contact-hero">
                 <div className="hero-overlay">
-                    <h1>Wait-Let's Connect!</h1>
+                    <h1></h1>
                     <p>Experience the Warmth of Our Tradition</p>
                 </div>
             </div>
 
             <div className="contact-container">
                 <div className="contact-grid">
+                    {/* Left Column: Contact Info */}
                     <div className="contact-info">
                         <div className="info-card">
                             <div className="info-icon">📍</div>
@@ -73,16 +74,9 @@ const Contact = () => {
                                 <p>Mon - Sun: 7:00 AM - 10:00 PM</p>
                             </div>
                         </div>
-
-                        <div className="map-section">
-                            {/* Visual placeholder for Google Map */}
-                            <div className="map-placeholder">
-                                <p>Interactive Map Loader...</p>
-                                <div className="map-pin">📍</div>
-                            </div>
-                        </div>
                     </div>
 
+                    {/* Right Column: Contact Form */}
                     <div className="contact-form-section">
                         <div className="form-card">
                             <h2>Send us a Message</h2>
@@ -132,11 +126,11 @@ const Contact = () => {
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="steam-decoration">
-                <div className="steam-wave"></div>
-                <div className="steam-wave"></div>
+                <div className="steam-decoration">
+                    <div className="steam-wave"></div>
+                    <div className="steam-wave"></div>
+                </div>
             </div>
         </div>
     );

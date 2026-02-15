@@ -10,10 +10,10 @@ const ProductForm = () => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
     const [image, setImage] = useState('');
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState('Maavu'); // Default to Maavu
     const [description, setDescription] = useState('');
     const [stock, setStock] = useState(0);
-    const [weight, setWeight] = useState('');
+    const [unit, setUnit] = useState(''); // Changed from weight to unit
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -32,7 +32,7 @@ const ProductForm = () => {
                     setCategory(data.category);
                     setDescription(data.description);
                     setStock(data.stock);
-                    setWeight(data.weight || '');
+                    setUnit(data.unit || ''); // Load unit
                 } catch (err) {
                     setError('Failed to fetch product');
                 }
@@ -54,8 +54,6 @@ const ProductForm = () => {
                 },
             };
 
-            // Note: In fetch, when sending FormData, do NOT set Content-Type header manually.
-            // The browser will set it with the boundary automatically.
             const res = await fetch('/api/upload', {
                 method: 'POST',
                 body: formData,
@@ -82,7 +80,7 @@ const ProductForm = () => {
             category,
             description,
             stock,
-            weight,
+            unit, // Send unit
         };
 
         try {
@@ -96,7 +94,6 @@ const ProductForm = () => {
                 method,
                 headers: {
                     'Content-Type': 'application/json',
-                    // Authorization header removed as backend routes are currently unprotected
                 },
                 body: JSON.stringify(productData),
             });
@@ -169,12 +166,17 @@ const ProductForm = () => {
                     </div>
                     <div className="form-group">
                         <label>Category</label>
-                        <input
-                            type="text"
+                        <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
                             required
-                        />
+                            style={{ width: '100%', padding: '12px', border: '1px solid #e5e7eb', borderRadius: '8px', backgroundColor: 'white' }}
+                        >
+                            <option value="Maavu">Maavu (Batter)</option>
+                            <option value="Chutney">Chutney</option>
+                            <option value="Masala">Masala</option>
+                            <option value="Podi">Podi</option>
+                        </select>
                     </div>
                     <div className="form-group">
                         <label>Stock Count</label>
@@ -186,12 +188,13 @@ const ProductForm = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Weight (Optional)</label>
+                        <label>Quantity / Unit</label>
                         <input
                             type="text"
-                            value={weight}
-                            onChange={(e) => setWeight(e.target.value)}
-                            placeholder="e.g. 1 kg"
+                            value={unit}
+                            onChange={(e) => setUnit(e.target.value)}
+                            placeholder="e.g. 1 kg, 500g, 1 Litre"
+                            required
                         />
                     </div>
                     <div className="form-group">
